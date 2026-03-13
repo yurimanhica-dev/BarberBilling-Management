@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms</value>
+  </resheader>
+
+  <!-- Mensagens traduzidas -->
+  <data name="UnexpectedError" xml:space="preserve">
+    <value>Ocorreu um erro inesperado ao processar a requisição.</value>
+  </data>
+
+  <!-- Request Expense Validator -->
+  <!-- Request Expense Validator -->
+<data name="barberNameRequired" xml:space="preserve">
+  <value>O nome do barbeiro é obrigatório.</value>
+</data>
+<data name="clientNameRequired" xml:space="preserve">
+  <value>O nome do cliente é obrigatório.</value>
+</data>
+<data name="serviceNameRequired" xml:space="preserve">
+  <value>O nome do serviço é obrigatório.</value>
+</data>
+
+<data name="AmountGreaterThanZero" xml:space="preserve">
+  <value>O valor deve ser superior a zero.</value>
+</data>
+
+<data name="DateCannotBeFuture" xml:space="preserve">
+  <value>A data não pode estar no futuro.</value>
+</data>
+
+<data name="PaymentMethodInvalid" xml:space="preserve">
+  <value>O método de pagamento não é válido.</value>
+</data>
+<data name="StatusInvalid" xml:space="preserve">
+  <value>O estado não é válido.</value>
+</data>
+
+  <!-- Expense NotFoundException -->
+  <data name="BillingNotFound" xml:space="preserve">
+    <value>Faturação Não Encontrada</value>
+  </data>
+</root>

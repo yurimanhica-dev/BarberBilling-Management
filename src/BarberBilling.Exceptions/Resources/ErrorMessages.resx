@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms</value>
+  </resheader>
+  
+  <!-- Translated messages -->
+  <data name="UnexpectedError" xml:space="preserve">
+    <value>An unexpected error occurred while processing the request.</value>
+  </data>
+
+  <!-- Request Expense Validator -->
+  <data name="barberNameRequired" xml:space="preserve">
+    <value>The Title is required.</value>
+  </data>
+  <data name="clientNameRequired" xml:space="preserve">
+    <value>The Title is required.</value>
+  </data>
+  <data name="serviceNameRequired" xml:space="preserve">
+    <value>The Title is required.</value>
+  </data>
+
+  <data name="AmountGreaterThanZero" xml:space="preserve">
+    <value>The Amount must be greater than zero.</value>
+  </data>
+
+  <data name="DateCannotBeFuture" xml:space="preserve">
+    <value>The Date cannot be in the future.</value>
+  </data>
+
+  <data name="PaymentMethodInvalid" xml:space="preserve">
+    <value>The Payment Method is not valid.</value>
+  </data>
+  <data name="StatusInvalid" xml:space="preserve">
+    <value>The Payment Method is not valid.</value>
+  </data>
+
+  <!-- Expense NotFoundException -->
+  <data name="BillingNotFound" xml:space="preserve">
+    <value>Billing not Found.</value>
+  </data>
+</root>

@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>aa3d38a7-e389-4c05-b74d-e4f9e94884fd</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.3" />
+    <PackageReference Include="Scalar.AspNetCore" Version="2.13.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BarberBilling.Exceptions\BarberBilling.Exceptions.csproj" />
+    <ProjectReference Include="..\BarberBilling.Infrastructure\BarberBilling.Infrastructure.csproj" />
+    <ProjectReference Include="..\BarberBilling.Application\BarberBilling.Application.csproj" />
+    <ProjectReference Include="..\BarberBilling.Communication\BarberBilling.Communication.csproj" />
+  </ItemGroup>
+
+</Project>

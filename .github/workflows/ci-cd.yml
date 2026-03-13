@@ -1,0 +1,44 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-test-format:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Cache NuGet packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
+
+      - name: Restore dependencies
+        run: dotnet restore ./BarberBilling.slnx
+
+      - name: Install dotnet-format
+        run: dotnet tool install --global dotnet-format
+
+      - name: Format code
+        run: dotnet format ./src/BarberBilling.Api/BarberBilling.Api.csproj --verify-no-changes
+        env:
+          DOTNET_ROOT: ${{ runner.tool_cache }}/dotnet
+
+      - name: Build
+        run: dotnet build ./BarberBilling.slnx --no-restore --configuration Release
+
+      - name: Run tests
+        run: dotnet test ./tests/Validator.Tests/Validators.Tests.csproj --verbosity normal

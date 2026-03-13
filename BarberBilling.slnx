@@ -1,0 +1,16 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/BarberBilling.Api/BarberBilling.Api.csproj" />
+    <Project Path="src/BarberBilling.Application/BarberBilling.Application.csproj" />
+    <Project Path="src/BarberBilling.Communication/BarberBilling.Communication.csproj" />
+    <Project Path="src/BarberBilling.Domain/BarberBilling.Domain.csproj" />
+    <Project Path="src/BarberBilling.Exceptions/BarberBilling.Exceptions.csproj" />
+    <Project Path="src/BarberBilling.Infrastructure/BarberBilling.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/BarberBilling.Tests/BarberBilling.Tests.csproj" />
+  </Folder>
+  <Folder Name="/tests/Validator.Tests/">
+    <Project Path="tests/Validator.Tests/Validators.Tests.csproj" />
+  </Folder>
+</Solution>
