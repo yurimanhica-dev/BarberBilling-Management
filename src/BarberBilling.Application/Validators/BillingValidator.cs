@@ -1,10 +1,11 @@
 using BarberBilling.Application.UseCases.Billings;
+using BarberBilling.Communication.Requests.Billings;
 using BarberBilling.Exceptions.Validation;
 using FluentValidation;
 
 namespace BarberBilling.Application.Validators;
 
-public class BillingValidator : AbstractValidator<BillingInput>
+public class BillingValidator : AbstractValidator<BillingRequestJson>
 {
     public BillingValidator()
     {
@@ -21,7 +22,7 @@ public class BillingValidator : AbstractValidator<BillingInput>
         .GreaterThan(0).WithMessage("AmountGreaterThanZero");
 
         RuleFor(b => b.Date)
-        .LessThanOrEqualTo(DateOnly.FromDateTime(DateTime.UtcNow)).
+        .LessThanOrEqualTo(DateTime.UtcNow).
         WithMessage("DateCannotBeFuture");
 
         RuleFor(b => b.PaymentMethod)
@@ -31,9 +32,9 @@ public class BillingValidator : AbstractValidator<BillingInput>
         .IsInEnum().WithMessage("StatusInvalid");
     }
 
-    public void ValidateInput(BillingInput input)
+    public void ValidateInput(BillingRequestJson request)
     {
-        var result = Validate(input);
+        var result = Validate(request);
 
         if (!result.IsValid)
         {

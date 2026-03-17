@@ -2,6 +2,8 @@ using BarberBilling.Domain.Repositories;
 using BarberBilling.Domain.Repositories.Billings;
 using BarberBilling.Application.Validators;
 using BarberBilling.Application.Mappings;
+using BarberBilling.Communication.Requests.Billings;
+using BarberBilling.Communication.Responses.Billings.Register;
 
 namespace BarberBilling.Application.UseCases.Billings.Register;
 
@@ -16,16 +18,16 @@ public class RegisterBillingUseCase : IRegisterBillingUseCase
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<RegisterBillingOutput> Execute(BillingInput input)
+    public async Task<ResponseRegisterBillingJson> Execute(BillingRequestJson request)
     {
-        new BillingValidator().ValidateInput(input);
+        new BillingValidator().ValidateInput(request);
 
-        var entity = input.ToEntity();
+        var entity = request.ToEntity();
         entity.CreatedAt = DateTime.UtcNow;
 
         await _expensesRepository.Add(entity);
         await _unitOfWork.Commit();
 
-        return entity.ToRegisterOutput();
+        return entity.ToRegisterResponse();
     }
 }

@@ -1,4 +1,5 @@
 using BarberBilling.Application.Mappings;
+using BarberBilling.Communication.Responses.Billings.GetById;
 using BarberBilling.Domain.Repositories.Billings;
 using BarberBilling.Exceptions.Base;
 
@@ -8,10 +9,10 @@ public class GetByIdBillingUseCase(IBillingReadOnlyRepository billing) : IGetByI
 {
     private readonly IBillingReadOnlyRepository _billingRepository = billing;
 
-    public async Task<GetByIdBillingOutput> Execute(Guid id)
+    public async Task<ResponseBillingJson> Execute(Guid id)
     {
         var result = await _billingRepository.GetById(id) ?? throw new NotFoundException("BillingNotFound");
-        var response = result.ToGetByIdOutput();
+        var response = result.ToGetByIdResponse();
         return response;
     }
 }
