@@ -35,7 +35,7 @@ public class BillingController : ControllerBase
         [FromServices] IGetAllBillingUseCase useCase)
     {
         var response = await useCase.Execute();
-        
+
         if (response is null)
             return NoContent();
 
@@ -92,7 +92,7 @@ public class BillingController : ControllerBase
 
         byte[] file = await useCase.ExecuteWeekly(weekStart);
 
-        if(file.Length > 0)
+        if (file.Length > 0)
             return File(file, MediaTypeNames.Application.Pdf, $"Corte_Fino_report_weekly_from_{weekStart}.pdf");
 
         return NoContent();
@@ -102,14 +102,14 @@ public class BillingController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> GetMonthlyReport([FromServices] IGenerateBillingsReportPdfUseCase useCase,  [FromQuery] int year, [FromQuery] int month)
+    public async Task<IActionResult> GetMonthlyReport([FromServices] IGenerateBillingsReportPdfUseCase useCase, [FromQuery] int year, [FromQuery] int month)
     {
         if (month < 1 || month > 12)
-        throw new DomainException("InvalidMonth");
+            throw new DomainException("InvalidMonth");
 
         byte[] file = await useCase.ExecuteMonthly(year, month);
 
-        if(file.Length > 0)
+        if (file.Length > 0)
             return File(file, MediaTypeNames.Application.Pdf, $"Corte_Fino_report_monthly_{month}_from_{year}.pdf");
 
         return NoContent();
