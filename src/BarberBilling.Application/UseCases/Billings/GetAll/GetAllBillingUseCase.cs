@@ -1,4 +1,5 @@
 using BarberBilling.Application.Mappings;
+using BarberBilling.Communication.Responses.Billings.GetAll;
 using BarberBilling.Domain.Repositories.Billings;
 
 namespace BarberBilling.Application.UseCases.Billings.GetAll;
@@ -6,9 +7,13 @@ namespace BarberBilling.Application.UseCases.Billings.GetAll;
 public class GetAllBillingUseCase(IBillingReadOnlyRepository billing) : IGetAllBillingUseCase
 {
     private readonly IBillingReadOnlyRepository _billingRepository = billing;
-    public async Task<List<GetAllBillingOutput>> Execute()
+    public async Task<ResponseBillingsJson> Execute()
     {
         var result = await _billingRepository.GetAll();
-        return result.ToGetAllOutputs();
+        
+        return new ResponseBillingsJson
+        {
+            Billings = result.ToGetAllResponse()
+        };
     }
 }

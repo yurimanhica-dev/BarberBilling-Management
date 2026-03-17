@@ -1,7 +1,7 @@
-using BarberBilling.Api;
 using BarberBilling.Api.Localization;
 using BarberBilling.API.Extensions;
 using BarberBilling.Application;
+using BarberBilling.Application.Settings;
 using BarberBilling.Infrastructure;
 using ExpenseManagement.Api.Filters;
 using Scalar.AspNetCore;
@@ -9,19 +9,14 @@ using Scalar.AspNetCore;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddOpenApi(o =>
-{
-    o.AddDocumentTransformer((doc, context, ct) =>
-    {
-        doc.Info.Title = "Barber Billing Management API";
-        doc.Info.Version = "v1.0.0";
-        return Task.CompletedTask;
-    });
-});
+builder.Services.AddOpenApi();
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddApplication();
 builder.Services.AddMvc(options => { options.Filters.Add<ExceptionFilter>(); });
 builder.Services.AddLocalization();
+
+builder.Services.Configure<CompanySettings>(
+builder.Configuration.GetSection("CompanySettings"));
 
 var app = builder.Build();
 

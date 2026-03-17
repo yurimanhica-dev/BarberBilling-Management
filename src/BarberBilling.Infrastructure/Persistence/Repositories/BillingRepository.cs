@@ -1,6 +1,7 @@
 using BarberBilling.Domain.Entities;
 using BarberBilling.Domain.Repositories.Billings;
 using BarberBilling.Infrastructure.Context;
+using Humanizer;
 using Microsoft.EntityFrameworkCore;
 
 namespace BarberBilling.Infrastructure.Persistence.Repositories;
@@ -44,5 +45,17 @@ public class BillingRepository : IBillingWriteOnlyRepository, IBillingReadOnlyRe
     public void Update(Billing billing)
     {
         _dbContext.Billings.Update(billing);
+    }
+
+    public Task<List<Billing>> GetByRange(DateOnly start, DateOnly end)
+    {
+        var From = DateTime.SpecifyKind(start.ToDateTime(TimeOnly.MinValue), DateTimeKind.Utc);
+        var To = DateTime.SpecifyKind(end.ToDateTime(TimeOnly.MinValue), DateTimeKind.Utc);
+
+        return _dbContext.Billings
+            .AsNoTracking()
+            .Where(x => x.Date >= From && x.Date < To)
+            .OrderBy(x => x.Date)
+            .ToListAsync();
     }
 }

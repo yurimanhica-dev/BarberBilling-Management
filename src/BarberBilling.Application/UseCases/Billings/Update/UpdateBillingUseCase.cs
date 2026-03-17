@@ -1,5 +1,6 @@
 using BarberBilling.Application.Mappings;
 using BarberBilling.Application.Validators;
+using BarberBilling.Communication.Requests.Billings;
 using BarberBilling.Domain.Repositories;
 using BarberBilling.Domain.Repositories.Billings;
 using BarberBilling.Exceptions.Base;
@@ -18,15 +19,15 @@ public class UpdateBillingUseCase : IUpdateBillingUseCase
         _billingRepository = billingRepository;
         _unitOfWork = unitOfWork;
     }
-    public async Task Execute(Guid id, BillingInput input)
+    public async Task Execute(Guid id, BillingRequestJson request)
     {
-        new BillingValidator().ValidateInput(input);
+        new BillingValidator().ValidateInput(request);
 
         var billing = await _billingRepository.GetById(id) ?? throw new NotFoundException("BillingNotFound");
-        input.UpdateEntity(billing);
+        
+        request.UpdateEntity(billing);
 
         _billingRepository.Update(billing);
         await _unitOfWork.Commit();
     }
-
 }

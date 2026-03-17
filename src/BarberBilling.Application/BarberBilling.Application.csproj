@@ -9,6 +9,7 @@
   <ItemGroup>
     <PackageReference Include="FluentValidation" Version="12.1.1" />
     <PackageReference Include="Microsoft.Extensions.Localization" Version="10.0.0" />
+    <PackageReference Include="PDFsharp-MigraDoc" Version="6.2.4" />
   </ItemGroup>
 
   <PropertyGroup>
@@ -16,5 +17,16 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="UseCases\Billings\Reports\Pdf\fonts\BebasNeue-Regular.ttf" />
+    <EmbeddedResource Include="UseCases\Billings\Reports\Pdf\fonts\Roboto-Medium.ttf" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Content Include="images\**\*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
 
 </Project>

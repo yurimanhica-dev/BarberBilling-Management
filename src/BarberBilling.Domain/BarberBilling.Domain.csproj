@@ -6,4 +6,12 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <EnableDefaultEmbeddedResourceItems>false</EnableDefaultEmbeddedResourceItems>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\ResourceReportGenerationMessages.resx" />
+    <EmbeddedResource Include="Resources\ResourceReportGenerationMessages.pt.resx" />
+  </ItemGroup>
 </Project>

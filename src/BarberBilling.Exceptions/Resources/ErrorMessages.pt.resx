@@ -45,8 +45,19 @@
   <value>O estado não é válido.</value>
 </data>
 
-  <!-- Expense NotFoundException -->
+  <!-- Billing NotFoundException -->
   <data name="BillingNotFound" xml:space="preserve">
     <value>Faturação Não Encontrada</value>
   </data>
+
+  <!-- weekStart is not Monday -->
+  <data name="WeekStartMustBeMonday" xml:space="preserve">
+    <value>A data deve ser uma Segunda-feira.</value>
+  </data>
+
+  <!-- Inserted Month is Invalid -->
+  <data name="InvalidMonth" xml:space="preserve">
+    <value>O mês informado é inválido. Informe um valor de 1 a 12.</value>
+  </data>
+
 </root>
