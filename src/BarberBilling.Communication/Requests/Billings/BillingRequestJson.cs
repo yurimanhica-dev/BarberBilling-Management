@@ -4,7 +4,7 @@ namespace BarberBilling.Communication.Requests.Billings;
 
 public class BillingRequestJson
 {
-    public DateOnly Date { get; set; }
+    public DateTime Date { get; set; }
     public string BarberName { get; set; } = string.Empty;
     public string ClientName { get; set; } = string.Empty;
     public string ServiceName { get; set; } = string.Empty;

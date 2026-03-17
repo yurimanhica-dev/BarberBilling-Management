@@ -48,4 +48,15 @@
   <data name="BillingNotFound" xml:space="preserve">
     <value>Billing not Found.</value>
   </data>
+
+  <!-- weekStart is not Monday -->
+  <data name="WeekStartMustBeMonday" xml:space="preserve">
+    <value>The date must be a Monday.</value>
+  </data>
+
+  <!-- Inserted Month is Invalid -->
+  <data name="InvalidMonth" xml:space="preserve">
+    <value>The month provided is invalid. Please provide a value between 1 and 12.</value>
+  </data>
+
 </root>
