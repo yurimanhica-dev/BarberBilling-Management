@@ -1,8 +1,8 @@
 using BarberBilling.Api.Localization;
-using BarberBilling.API.Extensions;
 using BarberBilling.Application;
 using BarberBilling.Application.Settings;
 using BarberBilling.Infrastructure;
+using BarberBilling.Infrastructure.Migrations;
 using ExpenseManagement.Api.Filters;
 using Scalar.AspNetCore;
 
@@ -20,7 +20,6 @@ builder.Configuration.GetSection("CompanySettings"));
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
@@ -36,7 +35,15 @@ var localizationOptions = LocalizationConfig.GetRequestLocalizationOptions();
 app.UseRequestLocalization(localizationOptions);
 
 app.UseHttpsRedirection();
-await app.MigrateDatabase();
+
 app.MapControllers();
 
+await MigrateDatabase();
+
 app.Run();
+
+async Task MigrateDatabase()
+{
+    await using var scope = app.Services.CreateAsyncScope();
+    await DataBaseMigration.MigrateDataBase(scope.ServiceProvider);
+}

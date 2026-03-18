@@ -1,3 +1,4 @@
+using BarberBilling.Application.Resources;
 using BarberBilling.Application.Settings;
 using BarberBilling.Application.UseCases.Billings.Delete;
 using BarberBilling.Application.UseCases.Billings.GetAll;
@@ -6,6 +7,7 @@ using BarberBilling.Application.UseCases.Billings.Register;
 using BarberBilling.Application.UseCases.Billings.Reports.Pdf;
 using BarberBilling.Application.UseCases.Billings.Update;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Localization;
 
 namespace BarberBilling.Application;
 
@@ -21,6 +23,7 @@ public static class DependencyInjectionExtension
         services.AddScoped<IRegisterBillingUseCase, RegisterBillingUseCase>();
         services.AddScoped<IGetAllBillingUseCase, GetAllBillingUseCase>();
         services.AddScoped<IGetByIdBillingUseCase, GetByIdBillingUseCase>();
+        services.AddScoped<IStringLocalizer<ResourceEnumResponse>, StringLocalizer<ResourceEnumResponse>>();
         services.AddScoped<IDeleteBillingUseCase, DeleteBillingUseCase>();
         services.AddScoped<IUpdateBillingUseCase, UpdateBillingUseCase>();
         services.AddScoped<IGenerateBillingsReportPdfUseCase, GenerateBillingsReportPdfUseCase>();

@@ -1,4 +1,5 @@
 using BarberBilling.Domain.Entities;
+using BarberBilling.Domain.Enums;
 using BarberBilling.Domain.Repositories.Billings;
 using BarberBilling.Infrastructure.Context;
 using Humanizer;
@@ -54,7 +55,7 @@ public class BillingRepository : IBillingWriteOnlyRepository, IBillingReadOnlyRe
 
         return _dbContext.Billings
             .AsNoTracking()
-            .Where(x => x.Date >= From && x.Date < To)
+            .Where(x => x.Date >= From && x.Date < To && x.Status == Status.Pago)
             .OrderBy(x => x.Date)
             .ToListAsync();
     }
