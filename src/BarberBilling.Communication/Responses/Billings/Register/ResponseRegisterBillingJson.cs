@@ -1,6 +1,7 @@
 namespace BarberBilling.Communication.Responses.Billings.Register;
 
-public class ResponseRegisterBillingJson
-{
-    public Guid Id { get; set; }
-}
+public record ResponseRegisterBillingJson
+(
+    Guid Id 
+);
+    

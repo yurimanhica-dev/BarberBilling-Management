@@ -1,4 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\BarberBilling.Domain\BarberBilling.Domain.csproj" />
@@ -13,10 +18,13 @@
   </ItemGroup>
 
   <PropertyGroup>
-    <TargetFramework>net10.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
+    <EnableDefaultEmbeddedResourceItems>false</EnableDefaultEmbeddedResourceItems>
   </PropertyGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\ResourceEnumResponse.resx" />
+    <EmbeddedResource Include="Resources\ResourceEnumResponse.pt.resx" />
+  </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="UseCases\Billings\Reports\Pdf\fonts\BebasNeue-Regular.ttf" />

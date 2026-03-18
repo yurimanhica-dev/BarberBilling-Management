@@ -1,4 +1,3 @@
-
 using BarberBilling.Domain.Repositories;
 using BarberBilling.Domain.Repositories.Billings;
 using BarberBilling.Infrastructure.Context;

@@ -1,10 +1,12 @@
+using BarberBilling.Application.Mappings.Common;
+using BarberBilling.Application.Resources;
 using BarberBilling.Communication.Requests.Billings;
 using BarberBilling.Communication.Responses.Billings.GetAll;
 using BarberBilling.Communication.Responses.Billings.GetById;
 using BarberBilling.Communication.Responses.Billings.Register;
-using BarberBilling.Communication.Responses.Shared;
 using BarberBilling.Domain.Entities;
 using BarberBilling.Domain.Enums;
+using Microsoft.Extensions.Localization;
 
 namespace BarberBilling.Application.Mappings;
 
@@ -14,72 +16,67 @@ public static class BillingMapping
     {
         return new Billing
         {
-            Date = request.Date,
+            Date = DateTime.SpecifyKind(request.Date, DateTimeKind.Utc),
             BarberName = request.BarberName,
             ClientName = request.ClientName,
             ServiceName = request.ServiceName,
             Amount = request.Amount,
             Status = (Status)request.Status,
             PaymentMethod = (PaymentMethod)request.PaymentMethod,
-            Notes = request.Notes
+            Notes = request.Notes,
+            CreatedAt = DateTime.UtcNow
         };
     }
     public static ResponseRegisterBillingJson ToRegisterResponse(this Billing entity)
     {
         return new ResponseRegisterBillingJson
-        {
-            Id = entity.Id
-        };
+        (
+        entity.Id
+        );
     }
-    public static ResponseBillingJson ToGetByIdResponse(this Billing entity)
+    public static ResponseBillingJson ToGetByIdResponse(this Billing entity, IStringLocalizer<ResourceEnumResponse> localizer)
     {
-        return new ResponseBillingJson
-        {
-            Id = entity.Id,
-            Date = entity.Date,
-            BarberName = entity.BarberName,
-            ClientName = entity.ClientName,
-            ServiceName = entity.ServiceName,
-            Amount = entity.Amount,
-            PaymentMethod = new EnumResponse
-            {
-                Id = (int)entity.PaymentMethod,
-                Description = entity.PaymentMethod.ToString()
-            },
-            Status = new EnumResponse
-            {
-                Id = (int)entity.Status,
-                Description = entity.Status.ToString()
-            },
-            Notes = entity.Notes
-        };
+        return new ResponseBillingJson(
+            entity.Id,
+            entity.Date,
+            entity.BarberName,
+            entity.ClientName,
+            entity.ServiceName,
+            entity.Amount,
+            entity.PaymentMethod.ToEnumResponse(localizer),
+            entity.Status.ToEnumResponse(localizer),
+            entity.Notes
+        );
     }
-    public static List<ResponseBillingListJson> ToGetAllResponse(this List<Billing> entities)
+    public static List<ResponseBillingListJson> ToGetAllResponse(this List<Billing> entities, IStringLocalizer<ResourceEnumResponse>? localizer)
     {
-        return entities.Select(entity => new ResponseBillingListJson
-        {
-            Id = entity.Id,
-            ClientName = entity.ClientName,
-            ServiceName = entity.ServiceName,
-            Amount = entity.Amount
-        }).ToList();
+        return entities.Select(entity => new ResponseBillingListJson(
+            entity.Id,
+            entity.ClientName,
+            entity.ServiceName,
+            entity.Amount,
+            entity.Date,
+            entity.Status.ToEnumResponse(localizer!)
+        )).ToList();
     }
     public static ResponseBillingsJson ToGetAllOutputs(this List<Billing> entities)
     {
         return new ResponseBillingsJson
         {
-            Billings = entities.ToGetAllResponse()
-            
+            Billings = entities.ToGetAllResponse(
+                localizer: null
+            )
         };
     }
     public static Billing UpdateEntity(this BillingRequestJson request, Billing billing)
     {
-        billing.Date = request.Date;
+        billing.Date = DateTime.SpecifyKind(request.Date, DateTimeKind.Utc);
         billing.BarberName = request.BarberName;
         billing.ClientName = request.ClientName;
         billing.ServiceName = request.ServiceName;
         billing.Amount = request.Amount;
         billing.PaymentMethod = (PaymentMethod)request.PaymentMethod;
+        billing.Status = (Status)request.Status;
         billing.Notes = request.Notes;
         billing.UpdatedAt = DateTime.UtcNow;
         return billing;

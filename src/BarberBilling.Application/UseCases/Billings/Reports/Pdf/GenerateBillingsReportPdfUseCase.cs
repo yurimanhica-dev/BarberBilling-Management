@@ -1,6 +1,7 @@
 using System.Reflection;
 using BarberBilling.Application.Extensions;
 using BarberBilling.Application.Helper;
+using BarberBilling.Application.Resources;
 using BarberBilling.Application.Settings;
 using BarberBilling.Application.UseCases.Billings.Reports.Pdf.colors;
 using BarberBilling.Application.UseCases.Billings.Reports.Pdf.fonts;
@@ -21,14 +22,16 @@ public class GenerateBillingsReportPdfUseCase : IGenerateBillingsReportPdfUseCas
     private readonly CompanySettings _settings;
     private readonly IBillingReadOnlyRepository _billingsRepository;
     private readonly IStringLocalizer<ResourceReportGenerationMessages> _localizer;
+    private readonly IStringLocalizer<ResourceEnumResponse> _enumLocalizer;
     public GenerateBillingsReportPdfUseCase(IBillingReadOnlyRepository billingsRepository,
-    IStringLocalizer<ResourceReportGenerationMessages> localizer,
+    IStringLocalizer<ResourceReportGenerationMessages> localizer, IStringLocalizer<ResourceEnumResponse> enumLocalizer,
     IOptions<CompanySettings> options)
     {
         _billingsRepository = billingsRepository;
         _localizer = localizer;
         _settings = options.Value;
         GlobalFontSettings.FontResolver = new BillingsReportFontResolver();
+        _enumLocalizer = enumLocalizer;
     }
     public async Task<byte[]> ExecuteWeekly(DateOnly weekStart)
     {
@@ -211,7 +214,7 @@ public class GenerateBillingsReportPdfUseCase : IGenerateBillingsReportPdfUseCas
             row.Cells[1].AddParagraph(billing.Date.ToString("t"));
             SetStyleBaseForBillingInformation(row.Cells[1]);
 
-            row.Cells[2].AddParagraph(billing.PaymentMethod.GetDescription(_localizer));
+            row.Cells[2].AddParagraph(billing.PaymentMethod.GetDescription(_enumLocalizer));
             SetStyleBaseForBillingInformation(row.Cells[2]);
 
             AddBillingAmount(row.Cells[3], billing.Amount);
@@ -247,10 +250,10 @@ public class GenerateBillingsReportPdfUseCase : IGenerateBillingsReportPdfUseCas
         footer.Format.Alignment = ParagraphAlignment.Right;
 
         // Texto: "Página X de Y"
-        footer.AddText("Página ");
-        footer.AddPageField();      // Número atual da página
-        footer.AddText(" de ");
-        footer.AddNumPagesField();  // Total de páginas
+        footer.AddText(_localizer["Page"].Value + " ");
+        footer.AddPageField();
+        footer.AddText(" " + _localizer["of"].Value + " ");
+        footer.AddNumPagesField();
 
         // Formatação opcional
         footer.Format.Font.Name = "Arial";
