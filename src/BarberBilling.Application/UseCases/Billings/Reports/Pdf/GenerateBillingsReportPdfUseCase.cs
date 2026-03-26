@@ -6,6 +6,7 @@ using BarberBilling.Application.Settings;
 using BarberBilling.Application.UseCases.Billings.Reports.Pdf.colors;
 using BarberBilling.Application.UseCases.Billings.Reports.Pdf.fonts;
 using BarberBilling.Domain.Entities;
+using BarberBilling.Domain.Enums;
 using BarberBilling.Domain.Repositories.Billings;
 using BarberBilling.Domain.Resources;
 using Microsoft.Extensions.Localization;
@@ -33,9 +34,9 @@ public class GenerateBillingsReportPdfUseCase : IGenerateBillingsReportPdfUseCas
         GlobalFontSettings.FontResolver = new BillingsReportFontResolver();
         _enumLocalizer = enumLocalizer;
     }
-    public async Task<byte[]> ExecuteWeekly(DateOnly weekStart)
+    public async Task<byte[]> ExecuteWeekly(DateOnly weekStart, Status? status = null)
     {
-        var billings = await _billingsRepository.GetByRange(weekStart, weekStart.AddDays(6));
+        var billings = await _billingsRepository.GetByRange(weekStart, weekStart.AddDays(6), status);
         return await GenerateReport(billings, _localizer["WeeklyBillingTitle"].Value, weekStart, weekStart.AddDays(6));
     }
 
@@ -52,6 +53,8 @@ public class GenerateBillingsReportPdfUseCase : IGenerateBillingsReportPdfUseCas
     DateOnly periodStart, 
     DateOnly periodEnd)
     {
+        if (billings.Count == 0) return Array.Empty<byte>();
+
         var document = CreateDocument(periodStart);
         var page = CreatePage(document);
         CreateHeaderWithImage(page);
@@ -122,8 +125,6 @@ public class GenerateBillingsReportPdfUseCase : IGenerateBillingsReportPdfUseCas
     }
     private void CreateTotalBillingsSection(Section page, decimal totalBillings, string title) 
     {
-        if(totalBillings > 0)
-        {
             var paragraph = page.AddParagraph();
             paragraph.Format.SpaceAfter = "20";
             paragraph.Format.SpaceBefore = "40";
@@ -133,14 +134,6 @@ public class GenerateBillingsReportPdfUseCase : IGenerateBillingsReportPdfUseCas
             paragraph.AddLineBreak();
             paragraph.AddLineBreak();
             paragraph.AddFormattedText($"{CurrencyFormatter.FormatCurrency(totalBillings)} MZN", new Font { Name = FontHelper.BebasNeueRegular, Size = 50 });
-        } else
-        {
-            var paragraph = page.AddParagraph();
-            paragraph.Format.SpaceAfter = "20";
-            paragraph.Format.SpaceBefore = "40";
-
-            paragraph.AddFormattedText(title, new Font { Name = FontHelper.RobotoMedium, Size = 15 });
-        }
     }
     private static Table CreateBillingTable(Section page)
     {

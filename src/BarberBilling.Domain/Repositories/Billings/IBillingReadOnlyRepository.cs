@@ -1,10 +1,12 @@
 using BarberBilling.Domain.Entities;
+using BarberBilling.Domain.Entities.QueryParameters;
+using BarberBilling.Domain.Enums;
 
 namespace BarberBilling.Domain.Repositories.Billings;
 
 public interface IBillingReadOnlyRepository
 {
-    Task<List<Billing>> GetAll();
+    Task<(List<Billing> Items, int TotalCount)> GetAll(BillingFilter filter, Guid userId, string role);
     Task<Billing?> GetById(Guid id);
-    Task<List<Billing>> GetByRange(DateOnly start, DateOnly end);
+    Task<List<Billing>> GetByRange(DateOnly start, DateOnly end, Status? status = null);
 }

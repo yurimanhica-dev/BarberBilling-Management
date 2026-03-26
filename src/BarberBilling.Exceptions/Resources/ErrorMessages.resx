@@ -59,4 +59,48 @@
     <value>The month provided is invalid. Please provide a value between 1 and 12.</value>
   </data>
 
+  <!-- Name Validation -->
+  <data name="nameRequired" xml:space="preserve">
+    <value>Name is required.</value>
+  </data>
+  <data name="nameTooShort" xml:space="preserve">
+    <value>Name must be at least 3 characters long.</value>
+  </data>
+  <data name="nameTooLong" xml:space="preserve">
+    <value>Name must not exceed 100 characters.</value>
+  </data>
+
+  <!-- Email Validation -->
+  <data name="emailRequired" xml:space="preserve">
+    <value>Email is required.</value>
+  </data>
+  <data name="emailInvalid" xml:space="preserve">
+    <value>The provided email is not valid.</value>
+  </data>
+  <data name="emailTooLong" xml:space="preserve">
+    <value>Email must not exceed 150 characters.</value>
+  </data>
+
+  <!-- Password Validation -->
+  <data name="passwordNotStrongEnough" xml:space="preserve">
+    <value>The password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character.</value>
+  </data>
+  <data name="InvalidSpecialCharacter" xml:space="preserve">
+    <value>The password must contain at least one valid special character.</value>
+  </data>
+
+  <!-- Valida a existência do Email -->
+  <data name="EmailAlreadyExists" xml:space="preserve">
+    <value>Email already in use.</value>
+  </data>
+
+  <!-- Valida a existência do Usuário -->
+  <data name="EmailOrPasswordInvalid" xml:space="preserve">
+    <value>Invalid email or password.</value>
+  </data>
+
+  <!-- Valida a existência do Token -->
+  <data name="InvalidToken" xml:space="preserve">
+    <value>Invalid or expired refresh token.</value>
+  </data>
 </root>

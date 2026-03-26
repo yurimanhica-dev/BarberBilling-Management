@@ -60,4 +60,52 @@
     <value>O mês informado é inválido. Informe um valor de 1 a 12.</value>
   </data>
 
+  <!-- Validação de Nome -->
+<data name="nameRequired" xml:space="preserve">
+  <value>O nome é obrigatório.</value>
+</data>
+<data name="nameTooShort" xml:space="preserve">
+  <value>O nome deve ter pelo menos 3 caracteres.</value>
+</data>
+<data name="nameTooLong" xml:space="preserve">
+  <value>O nome não pode exceder 100 caracteres.</value>
+</data>
+
+<!-- Validação de Email -->
+<data name="emailRequired" xml:space="preserve">
+  <value>O email é obrigatório.</value>
+</data>
+<data name="emailInvalid" xml:space="preserve">
+  <value>O email informado não é válido.</value>
+</data>
+<data name="emailTooLong" xml:space="preserve">
+  <value>O email não pode exceder 150 caracteres.</value>
+</data>
+
+  <!-- Validação de Password -->
+  <data name="passwordNotStrongEnough" xml:space="preserve">
+    <value>A senha deve ter no mínimo 8 caracteres, contendo pelo menos uma letra maiúscula, minuscula,um número e um carácter especial
+    </value>
+  </data>
+  <data name="InvalidEspecialChapter" xml:space="preserve">
+    <value>A senha deve ter no mínimo 8 caracteres, contendo pelo menos uma letra maiúscula, minuscula,um número e um carácter especial.</value>
+  </data>
+  <data name="InvalidSpecialCharacter" xml:space="preserve">
+    <value>A senha deve conter pelo menos um caractere especial válido.</value>
+  </data>
+
+  <!-- Valida a existência do Email -->
+  <data name="EmailAlreadyExists" xml:space="preserve">
+    <value>E-mail já registrado.</value>
+  </data>
+
+  <!-- Valida a existência do Usuário -->
+  <data name="EmailOrPasswordInvalid" xml:space="preserve">
+    <value>E-mail e/ou senha inválidos.</value>
+  </data>
+
+  <!-- Valida a existência do Token -->
+  <data name="InvalidToken" xml:space="preserve">
+    <value>Refresh Token inválido ou expirado.</value>
+  </data>
 </root>

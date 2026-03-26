@@ -7,7 +7,7 @@ public record ResponseBillingJson
 (
     Guid Id,
     DateTime Date,
-    string BarberName,
+    Guid BarberIdentifier,
     string ClientName,
     string ServiceName,
     decimal Amount,

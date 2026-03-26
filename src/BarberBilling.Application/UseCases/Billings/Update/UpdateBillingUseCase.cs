@@ -3,7 +3,7 @@ using BarberBilling.Application.Validators;
 using BarberBilling.Communication.Requests.Billings;
 using BarberBilling.Domain.Repositories;
 using BarberBilling.Domain.Repositories.Billings;
-using BarberBilling.Exceptions.Base;
+using BarberBilling.Exceptions.ExceptionsBase;
 
 namespace BarberBilling.Application.UseCases.Billings.Update;
 

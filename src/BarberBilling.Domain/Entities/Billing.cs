@@ -6,7 +6,7 @@ public class Billing
 {
     public Guid Id { get; set; }
     public DateTime Date { get; set; }
-    public string BarberName { get; set; } = string.Empty;
+    public Guid BarberIdentifier { get; set; }
     public string ClientName { get; set; } = string.Empty;
     public string ServiceName { get; set; } = string.Empty;
     public decimal Amount { get; set; }

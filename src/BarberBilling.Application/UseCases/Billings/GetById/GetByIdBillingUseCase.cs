@@ -3,7 +3,7 @@ using BarberBilling.Application.Resources;
 using BarberBilling.Communication.Enums;
 using BarberBilling.Communication.Responses.Billings.GetById;
 using BarberBilling.Domain.Repositories.Billings;
-using BarberBilling.Exceptions.Base;
+using BarberBilling.Exceptions.ExceptionsBase;
 using Microsoft.Extensions.Localization;
 
 namespace BarberBilling.Application.UseCases.Billings.GetById;
