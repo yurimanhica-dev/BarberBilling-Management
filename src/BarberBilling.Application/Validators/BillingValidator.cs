@@ -1,6 +1,6 @@
 using BarberBilling.Application.UseCases.Billings;
 using BarberBilling.Communication.Requests.Billings;
-using BarberBilling.Exceptions.Validation;
+using BarberBilling.Exceptions.ExceptionsBase;
 using FluentValidation;
 
 namespace BarberBilling.Application.Validators;
@@ -9,8 +9,8 @@ public class BillingValidator : AbstractValidator<BillingRequestJson>
 {
     public BillingValidator()
     {
-        RuleFor(b => b.BarberName)
-        .NotEmpty().WithMessage("barberNameRequired");
+        // RuleFor(b => b.BarberName)
+        // .NotEmpty().WithMessage("barberNameRequired");
 
         RuleFor(b => b.ClientName)
         .NotEmpty().WithMessage("clientNameRequired");

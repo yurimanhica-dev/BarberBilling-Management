@@ -1,9 +1,9 @@
 using ExpenseManagement.Exception;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using BarberBilling.Exceptions.Base;
 using Microsoft.Extensions.Localization;
 using BarberBilling.Communication.Responses;
+using BarberBilling.Exceptions.ExceptionsBase;
 
 namespace ExpenseManagement.Api.Filters;
 

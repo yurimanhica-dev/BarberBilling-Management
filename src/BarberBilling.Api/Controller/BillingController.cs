@@ -1,14 +1,15 @@
-using System.Net.Mime;
+using System.Security.Claims;
+using BarberBilling.Application.Mappings;
 using BarberBilling.Application.UseCases.Billings.Delete;
 using BarberBilling.Application.UseCases.Billings.GetAll;
 using BarberBilling.Application.UseCases.Billings.GetById;
 using BarberBilling.Application.UseCases.Billings.Register;
-using BarberBilling.Application.UseCases.Billings.Reports.Pdf;
 using BarberBilling.Application.UseCases.Billings.Update;
 using BarberBilling.Communication.Requests.Billings;
+using BarberBilling.Communication.Requests.Billings.GetAllFilter;
 using BarberBilling.Communication.Responses;
 using BarberBilling.Communication.Responses.Billings.GetById;
-using BarberBilling.Exceptions.Domain;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BarberBilling.Api.Controller;
@@ -18,31 +19,39 @@ namespace BarberBilling.Api.Controller;
 public class BillingController : ControllerBase
 {
     [HttpPost]
+    [Authorize(Roles = "Admin, Barber, Manager")]
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(BillingRequestJson), StatusCodes.Status201Created)]
     public async Task<IActionResult> RegisterBilling(
         [FromServices] IRegisterBillingUseCase useCase,
         [FromBody] BillingRequestJson request)
     {
-        var output = await useCase.Execute(request);
+        var userId = Guid.Parse(User.FindFirst(ClaimTypes.Sid)!.Value);
+        var output = await useCase.Execute(request, userId);
         return Created(string.Empty, output);
     }
 
     [HttpGet]
+    [Authorize(Roles = "Admin, Barber, Manager")]
     [ProducesResponseType(typeof(List<ResponseBillingJson>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status204NoContent)]
     public async Task<IActionResult> GetBillings(
-        [FromServices] IGetAllBillingUseCase useCase)
+        [FromServices] IGetAllBillingUseCase useCase,
+        [FromQuery] BillingFilterQuery query)
     {
-        var response = await useCase.Execute();
+        var userId = Guid.Parse(User.FindFirst(ClaimTypes.Sid)!.Value);
+        var role = User.FindFirst(ClaimTypes.Role)?.Value!;
 
-        if (response is null)
+        var response = await useCase.Execute(query.ToFilter(), userId, role);
+
+        if (response is null || !response.Billings.Any())
             return NoContent();
 
         return Ok(response);
     }
 
     [HttpGet]
+    [Authorize(Roles = "Admin, Manager")]
     [Route("{id}")]
     [ProducesResponseType(typeof(ResponseBillingJson), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status404NotFound)]
@@ -55,6 +64,7 @@ public class BillingController : ControllerBase
     }
 
     [HttpPut]
+    [Authorize(Roles = "Admin, Barber, Manager")]
     [Route("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status404NotFound)]
@@ -69,6 +79,7 @@ public class BillingController : ControllerBase
     }
 
     [HttpDelete]
+    [Authorize(Roles = "Admin, Manager")]
     [Route("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status404NotFound)]
@@ -78,40 +89,6 @@ public class BillingController : ControllerBase
         [FromRoute] Guid id)
     {
         await useCase.Execute(id);
-        return NoContent();
-    }
-
-    [HttpGet("reports/weekly")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> GetWeeklyReport([FromServices] IGenerateBillingsReportPdfUseCase useCase, [FromQuery] DateOnly weekStart)
-    {
-        if (weekStart.DayOfWeek != DayOfWeek.Monday)
-            throw new DomainException("WeekStartMustBeMonday");
-
-        byte[] file = await useCase.ExecuteWeekly(weekStart);
-
-        if (file.Length > 0)
-            return File(file, MediaTypeNames.Application.Pdf, $"Corte_Fino_report_weekly_from_{weekStart}.pdf");
-
-        return NoContent();
-    }
-
-    [HttpGet("reports/monthly")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> GetMonthlyReport([FromServices] IGenerateBillingsReportPdfUseCase useCase, [FromQuery] int year, [FromQuery] int month)
-    {
-        if (month < 1 || month > 12)
-            throw new DomainException("InvalidMonth");
-
-        byte[] file = await useCase.ExecuteMonthly(year, month);
-
-        if (file.Length > 0)
-            return File(file, MediaTypeNames.Application.Pdf, $"Corte_Fino_report_monthly_{month}_from_{year}.pdf");
-
         return NoContent();
     }
 }

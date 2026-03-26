@@ -1,10 +1,12 @@
 using BarberBilling.Application.Mappings.Common;
 using BarberBilling.Application.Resources;
 using BarberBilling.Communication.Requests.Billings;
+using BarberBilling.Communication.Requests.Billings.GetAllFilter;
 using BarberBilling.Communication.Responses.Billings.GetAll;
 using BarberBilling.Communication.Responses.Billings.GetById;
 using BarberBilling.Communication.Responses.Billings.Register;
 using BarberBilling.Domain.Entities;
+using BarberBilling.Domain.Entities.QueryParameters;
 using BarberBilling.Domain.Enums;
 using Microsoft.Extensions.Localization;
 
@@ -17,7 +19,6 @@ public static class BillingMapping
         return new Billing
         {
             Date = DateTime.SpecifyKind(request.Date, DateTimeKind.Utc),
-            BarberName = request.BarberName,
             ClientName = request.ClientName,
             ServiceName = request.ServiceName,
             Amount = request.Amount,
@@ -39,7 +40,7 @@ public static class BillingMapping
         return new ResponseBillingJson(
             entity.Id,
             entity.Date,
-            entity.BarberName,
+            entity.BarberIdentifier,
             entity.ClientName,
             entity.ServiceName,
             entity.Amount,
@@ -47,6 +48,21 @@ public static class BillingMapping
             entity.Status.ToEnumResponse(localizer),
             entity.Notes
         );
+    }
+    public static Status? ToStatus(this string? status)
+    {
+        return Enum.TryParse<Status>(status, out var s) ? s : null;
+    }
+    public static BillingFilter ToFilter(this BillingFilterQuery query)
+    {
+        return new BillingFilter
+        {
+            Page = query.Page,
+            PageSize = query.PageSize,
+            Status = Enum.TryParse<Status>(query.Status, out var status) ? status : null,
+            Order = query.Order,
+            SortBy = query.SortBy
+        };
     }
     public static List<ResponseBillingListJson> ToGetAllResponse(this List<Billing> entities, IStringLocalizer<ResourceEnumResponse>? localizer)
     {
@@ -71,7 +87,6 @@ public static class BillingMapping
     public static Billing UpdateEntity(this BillingRequestJson request, Billing billing)
     {
         billing.Date = DateTime.SpecifyKind(request.Date, DateTimeKind.Utc);
-        billing.BarberName = request.BarberName;
         billing.ClientName = request.ClientName;
         billing.ServiceName = request.ServiceName;
         billing.Amount = request.Amount;

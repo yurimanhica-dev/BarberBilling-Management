@@ -1,7 +1,7 @@
 using BarberBilling.Application.Mappings;
 using BarberBilling.Application.Resources;
-using BarberBilling.Communication.Enums;
 using BarberBilling.Communication.Responses.Billings.GetAll;
+using BarberBilling.Domain.Entities.QueryParameters;
 using BarberBilling.Domain.Repositories.Billings;
 using Microsoft.Extensions.Localization;
 
@@ -16,13 +16,17 @@ public class GetAllBillingUseCase : IGetAllBillingUseCase
         _billingRepository = billing;
         _statusLocalizer = statusLocalizer;
     }
-    public async Task<ResponseBillingsJson> Execute()
+    public async Task<ResponseBillingsJson> Execute(BillingFilter filter, Guid userId, string role)
     {
-        var result = await _billingRepository.GetAll();
-        
+        var (billings, totalCount) = await _billingRepository.GetAll(filter, userId, role);
+
         return new ResponseBillingsJson
         {
-            Billings = result.ToGetAllResponse(_statusLocalizer)
+            Billings = billings.ToGetAllResponse(_statusLocalizer),
+            TotalCount = totalCount,
+            Page = filter.Page,
+            PageSize = filter.PageSize,
+            TotalPages = (int)Math.Ceiling((double)totalCount / filter.PageSize)
         };
     }
 }
