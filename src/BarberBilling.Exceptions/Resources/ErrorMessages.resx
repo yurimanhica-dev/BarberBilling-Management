@@ -44,9 +44,25 @@
     <value>The Payment Method is not valid.</value>
   </data>
 
-  <!-- Expense NotFoundException -->
+  <!-- NotFoundException -->
   <data name="BillingNotFound" xml:space="preserve">
     <value>Billing not Found.</value>
+  </data>
+  <data name="ServiceNotFound" xml:space="preserve">
+    <value>BiService not Found.</value>
+  </data>
+  <data name="RolePermissionNotFound" xml:space="preserve">
+    <value>Permission not found for this role.</value>
+  </data>
+
+  <!-- Redundance Insert -->
+  <data name="ServiceStatusUnchanged" xml:space="preserve">
+    <value>Service status unchanged.</value>
+  </data>
+
+  <!-- Conflict GetAll -->
+  <data name="PermissionAlreadyExists" xml:space="preserve">
+    <value>Permission already exists.</value>
   </data>
 
   <!-- weekStart is not Monday -->
@@ -103,4 +119,21 @@
   <data name="InvalidToken" xml:space="preserve">
     <value>Invalid or expired refresh token.</value>
   </data>
+
+  <data name="roleRequired" xml:space="preserve">
+    <value>Role is required.</value>
+  </data>
+
+  <data name="ServiceAlreadyExists" xml:space="preserve">
+    <value>Service already exists.</value>
+  </data>
+
+  <data name="UserNotFound" xml:space="preserve">
+    <value>User not found.</value>
+  </data>
+
+  <data name="ClientNotFound" xml:space="preserve">
+    <value>Client not found.</value>
+  </data>
+
 </root>

@@ -2,57 +2,89 @@ using BarberBilling.Application.Mappings.Common;
 using BarberBilling.Application.Resources;
 using BarberBilling.Communication.Requests.Billings;
 using BarberBilling.Communication.Requests.Billings.GetAllFilter;
+using BarberBilling.Communication.Responses.Billings.BillingService;
 using BarberBilling.Communication.Responses.Billings.GetAll;
 using BarberBilling.Communication.Responses.Billings.GetById;
 using BarberBilling.Communication.Responses.Billings.Register;
 using BarberBilling.Domain.Entities;
-using BarberBilling.Domain.Entities.QueryParameters;
+using BarberBilling.Domain.Entities.Billings;
+using BarberBilling.Domain.Entities.Filters;
 using BarberBilling.Domain.Enums;
 using Microsoft.Extensions.Localization;
 
-namespace BarberBilling.Application.Mappings;
-
 public static class BillingMapping
 {
+     public static Status? ToStatus(this string? status)
+    {
+        return Enum.TryParse<Status>(status, out var s) ? s : null;
+    }
     public static Billing ToEntity(this BillingRequestJson request)
     {
         return new Billing
         {
+            Id = Guid.NewGuid(),
             Date = DateTime.SpecifyKind(request.Date, DateTimeKind.Utc),
-            ClientName = request.ClientName,
-            ServiceName = request.ServiceName,
-            Amount = request.Amount,
             Status = (Status)request.Status,
             PaymentMethod = (PaymentMethod)request.PaymentMethod,
             Notes = request.Notes,
-            CreatedAt = DateTime.UtcNow
+            CreatedAt = DateTime.UtcNow,
+            UpdatedAt = DateTime.UtcNow
         };
     }
+
+    public static BillingService ToServiceEntity(this Service service, Guid billingId)
+    {
+        return new BillingService
+        {
+            Id = Guid.NewGuid(),
+            BillingId = billingId,
+            ServiceIdentifier = service.Id,
+            ServiceType = service.Services, 
+            Price = service.Price 
+        };
+    }
+
     public static ResponseRegisterBillingJson ToRegisterResponse(this Billing entity)
     {
-        return new ResponseRegisterBillingJson
-        (
-        entity.Id
-        );
+        return new ResponseRegisterBillingJson(entity.Id);
     }
+
     public static ResponseBillingJson ToGetByIdResponse(this Billing entity, IStringLocalizer<ResourceEnumResponse> localizer)
     {
         return new ResponseBillingJson(
             entity.Id,
             entity.Date,
             entity.BarberIdentifier,
-            entity.ClientName,
-            entity.ServiceName,
-            entity.Amount,
+            entity.ClientIdentifier,
+            entity.TotalAmount,
             entity.PaymentMethod.ToEnumResponse(localizer),
             entity.Status.ToEnumResponse(localizer),
-            entity.Notes
+            entity.Notes,
+            entity.Services.ToServicesResponse(localizer)
         );
     }
-    public static Status? ToStatus(this string? status)
+
+    public static List<ResponseBillingServiceJson> ToServicesResponse(this List<BillingService> services, IStringLocalizer<ResourceEnumResponse> localizer)
     {
-        return Enum.TryParse<Status>(status, out var s) ? s : null;
+        return services.Select(s => new ResponseBillingServiceJson(
+            s.ServiceIdentifier,
+            (int)s.ServiceType,
+            s.ServiceType.ToEnumResponse(localizer).Description,
+            s.Price
+        )).ToList();
     }
+
+    public static List<ResponseBillingListJson> ToGetAllResponse(this List<Billing> entities, IStringLocalizer<ResourceEnumResponse> localizer)
+    {
+        return entities.Select(entity => new ResponseBillingListJson(
+            entity.Id,
+            entity.ClientIdentifier,         
+            entity.TotalAmount,              
+            entity.Date,
+            entity.Status.ToEnumResponse(localizer)
+        )).ToList();
+    }
+
     public static BillingFilter ToFilter(this BillingFilterQuery query)
     {
         return new BillingFilter
@@ -64,32 +96,10 @@ public static class BillingMapping
             SortBy = query.SortBy
         };
     }
-    public static List<ResponseBillingListJson> ToGetAllResponse(this List<Billing> entities, IStringLocalizer<ResourceEnumResponse>? localizer)
-    {
-        return entities.Select(entity => new ResponseBillingListJson(
-            entity.Id,
-            entity.ClientName,
-            entity.ServiceName,
-            entity.Amount,
-            entity.Date,
-            entity.Status.ToEnumResponse(localizer!)
-        )).ToList();
-    }
-    public static ResponseBillingsJson ToGetAllOutputs(this List<Billing> entities)
-    {
-        return new ResponseBillingsJson
-        {
-            Billings = entities.ToGetAllResponse(
-                localizer: null
-            )
-        };
-    }
+
     public static Billing UpdateEntity(this BillingRequestJson request, Billing billing)
     {
         billing.Date = DateTime.SpecifyKind(request.Date, DateTimeKind.Utc);
-        billing.ClientName = request.ClientName;
-        billing.ServiceName = request.ServiceName;
-        billing.Amount = request.Amount;
         billing.PaymentMethod = (PaymentMethod)request.PaymentMethod;
         billing.Status = (Status)request.Status;
         billing.Notes = request.Notes;

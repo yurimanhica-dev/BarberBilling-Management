@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Localization;
 using BarberBilling.Communication.Responses;
-using BarberBilling.Exceptions.ExceptionsBase;
+using BarberBilling.Exceptions;
 
 namespace ExpenseManagement.Api.Filters;
 

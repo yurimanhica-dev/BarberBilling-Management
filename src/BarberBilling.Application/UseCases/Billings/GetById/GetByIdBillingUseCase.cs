@@ -1,9 +1,8 @@
 using BarberBilling.Application.Mappings;
 using BarberBilling.Application.Resources;
-using BarberBilling.Communication.Enums;
 using BarberBilling.Communication.Responses.Billings.GetById;
 using BarberBilling.Domain.Repositories.Billings;
-using BarberBilling.Exceptions.ExceptionsBase;
+using BarberBilling.Exceptions.CustomExceptions;
 using Microsoft.Extensions.Localization;
 
 namespace BarberBilling.Application.UseCases.Billings.GetById;

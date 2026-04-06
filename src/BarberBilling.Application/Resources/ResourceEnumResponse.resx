@@ -21,6 +21,44 @@
     <value>Cancelled</value>
   </data>
 
+  <!--Category Enums -->
+  <data name="Haircut" xml:space="preserve">
+  <value>Haircut</value>
+  </data>
+  <data name="Beard" xml:space="preserve">
+    <value>Beard</value>
+  </data>
+  <data name="Combo" xml:space="preserve">
+    <value>Haircut + Beard</value>
+  </data>
+  <data name="Treatment" xml:space="preserve">
+    <value>Treatment</value>
+  </data>
+  <data name="Coloring" xml:space="preserve">
+    <value>Coloring</value>
+  </data>
+  <data name="Finishing" xml:space="preserve">
+    <value>Finishing</value>
+  </data>
+  <data name="Kids" xml:space="preserve">
+    <value>Kids</value>
+  </data>
+  <data name="Premium" xml:space="preserve">
+    <value>Premium</value>
+  </data>
+  <data name="Eyebrow" xml:space="preserve">
+    <value>Eyebrow</value>
+  </data>
+  <data name="Shave" xml:space="preserve">
+    <value>Shave</value>
+  </data>
+  <data name="Massage" xml:space="preserve">
+    <value>Massage</value>
+  </data>
+  <data name="Special" xml:space="preserve">
+    <value>Special</value>
+  </data>
+
   <!-- Billing Payment Method Enum-->
   <data name="Cash" xml:space="preserve">
     <value>Cash</value>
@@ -39,4 +77,22 @@
   <data name="Other" xml:space="preserve">
     <value>Other Services</value>
   </data>
+
+  <!-- Service Category Enum-->
+  <data name="GradientHaircut"><value>Gradient Haircut</value></data>
+  <data name="RelaxingMassage"><value>Relaxing Massage</value></data>
+  <data name="HairTreatment"><value>Hair Treatment</value></data>
+  <data name="CustomService"><value>Custom Service</value></data>
+  <data name="HaircutAndBeard"><value>Haircut and Beard</value></data>
+  <data name="StraightRazorShave"><value>Straight Razor Shave</value></data>
+  <data name="Highlights"><value>Highlights</value></data>
+  <data name="ModeledBeard"><value>Modeled Beard</value></data>
+  <data name="FullColoring"><value>Full Coloring</value></data>
+  <data name="GradientAndBeard"><value>Gradient and Beard</value></data>
+  <data name="VipService"><value>VIP Service</value></data>
+  <data name="BlowDryFinish"><value>Blow Dry Finish</value></data>
+  <data name="KidsHaircut"><value>Kids Haircut</value></data>
+  <data name="EyebrowDesign"><value>Eyebrow Design</value></data>
+  <data name="SimpleHaircut"><value>Simple Haircut</value></data>
+  <data name="FullBeard"><value>Full Beard</value></data>
 </root>
