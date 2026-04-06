@@ -1,6 +1,6 @@
 using BarberBilling.Domain.Repositories;
 using BarberBilling.Domain.Repositories.Billings;
-using BarberBilling.Exceptions.ExceptionsBase;
+using BarberBilling.Exceptions.CustomExceptions;
 
 namespace BarberBilling.Application.UseCases.Billings.Delete;
 

@@ -1,5 +1,5 @@
-using BarberBilling.Domain.Entities;
-using BarberBilling.Domain.Entities.QueryParameters;
+using BarberBilling.Domain.Entities.Billings;
+using BarberBilling.Domain.Entities.Filters;
 using BarberBilling.Domain.Enums;
 
 namespace BarberBilling.Domain.Repositories.Billings;

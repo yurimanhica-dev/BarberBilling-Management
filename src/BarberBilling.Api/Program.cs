@@ -1,7 +1,4 @@
-using System.Configuration;
-using System.Text;
-using BarberBilling.Api.Extensions;
-using BarberBilling.Api.Localization;
+using BarberBilling.Api.Configuration;
 using BarberBilling.Api.Middleware;
 using BarberBilling.Application;
 using BarberBilling.Application.Settings;
@@ -19,6 +16,7 @@ builder.Services.AddApplication();
 builder.Services.AddMvc(options => { options.Filters.Add<ExceptionFilter>(); });
 builder.Services.AddLocalization();
 builder.Services.AddJwtAuthentication(builder.Configuration);
+builder.Services.AddPermissionAuthorization();
 
 builder.Services.Configure<CompanySettings>(
 builder.Configuration.GetSection("CompanySettings"));

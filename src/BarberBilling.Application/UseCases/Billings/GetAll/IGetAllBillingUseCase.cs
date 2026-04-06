@@ -1,5 +1,5 @@
 using BarberBilling.Communication.Responses.Billings.GetAll;
-using BarberBilling.Domain.Entities.QueryParameters;
+using BarberBilling.Domain.Entities.Filters;
 
 namespace BarberBilling.Application.UseCases.Billings.GetAll;
 

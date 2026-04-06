@@ -21,6 +21,44 @@
     <value>Cancelado</value>
   </data>
 
+    <!-- Category Enums-->
+  <data name="Haircut" xml:space="preserve">
+  <value>Corte</value>
+  </data>
+  <data name="Beard" xml:space="preserve">
+    <value>Barba</value>
+  </data>
+  <data name="Combo" xml:space="preserve">
+    <value>Corte + Barba</value>
+  </data>
+  <data name="Treatment" xml:space="preserve">
+    <value>Tratamento</value>
+  </data>
+  <data name="Coloring" xml:space="preserve">
+    <value>Coloração</value>
+  </data>
+  <data name="Finishing" xml:space="preserve">
+    <value>Finalização</value>
+  </data>
+  <data name="Kids" xml:space="preserve">
+    <value>Infantil</value>
+  </data>
+  <data name="Premium" xml:space="preserve">
+    <value>Premium</value>
+  </data>
+  <data name="Eyebrow" xml:space="preserve">
+    <value>Sobrancelha</value>
+  </data>
+  <data name="Shave" xml:space="preserve">
+    <value>Barbear</value>
+  </data>
+  <data name="Massage" xml:space="preserve">
+    <value>Massagem</value>
+  </data>
+  <data name="Special" xml:space="preserve">
+    <value>Especial</value>
+  </data>
+
   <!-- Billing Payment Method Enum-->
   <data name="Cash" xml:space="preserve">
     <value>Dinheiro</value>
@@ -39,4 +77,22 @@
   <data name="Other" xml:space="preserve">
     <value>Outros Serviços</value>
   </data>
+
+  <!-- Service Category Enum-->
+  <data name="GradientHaircut"><value>Corte Degradê</value></data>
+  <data name="RelaxingMassage"><value>Massagem Relaxante</value></data>
+  <data name="HairTreatment"><value>Hidratação Capilar</value></data>
+  <data name="CustomService"><value>Serviço Personalizado</value></data>
+  <data name="HaircutAndBeard"><value>Corte + Barba</value></data>
+  <data name="StraightRazorShave"><value>Barbear com Navalha</value></data>
+  <data name="Highlights"><value>Mechas</value></data>
+  <data name="ModeledBeard"><value>Barba Modelada</value></data>
+  <data name="FullColoring"><value>Coloração Completa</value></data>
+  <data name="GradientAndBeard"><value>Degradê + Barba</value></data>
+  <data name="VipService"><value>Serviço VIP Completo</value></data>
+  <data name="BlowDryFinish"><value>Finalização com Secador</value></data>
+  <data name="KidsHaircut"><value>Corte Infantil</value></data>
+  <data name="EyebrowDesign"><value>Design de Sobrancelha</value></data>
+  <data name="SimpleHaircut"><value>Corte Simples</value></data>
+  <data name="FullBeard"><value>Barba Completa</value></data>
 </root>

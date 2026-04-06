@@ -22,21 +22,80 @@ namespace BarberBilling.Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("BarberBilling.Domain.Entities.Billing", b =>
+            modelBuilder.Entity("BarberBilling.Domain.Entities.Authorization.Permission", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("PermissionIdentifier")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Permissions");
+                });
+
+            modelBuilder.Entity("BarberBilling.Domain.Entities.Authorization.Role", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("RoleIdentifier")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Roles");
+                });
+
+            modelBuilder.Entity("BarberBilling.Domain.Entities.Authorization.RolePermissions", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<Guid>("PermissionIdentifier")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("RoleIdentifier")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PermissionIdentifier");
+
+                    b.HasIndex("RoleIdentifier");
+
+                    b.ToTable("RolePermissions");
+                });
+
+            modelBuilder.Entity("BarberBilling.Domain.Entities.Billings.Billing", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("numeric");
-
                     b.Property<Guid>("BarberIdentifier")
                         .HasColumnType("uuid");
 
-                    b.Property<string>("ClientName")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<Guid>("ClientIdentifier")
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -50,12 +109,11 @@ namespace BarberBilling.Infrastructure.Migrations
                     b.Property<int>("PaymentMethod")
                         .HasColumnType("integer");
 
-                    b.Property<string>("ServiceName")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<int>("Status")
                         .HasColumnType("integer");
+
+                    b.Property<decimal>("TotalAmount")
+                        .HasColumnType("numeric");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -63,6 +121,31 @@ namespace BarberBilling.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Billings");
+                });
+
+            modelBuilder.Entity("BarberBilling.Domain.Entities.Billings.BillingService", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("BillingId")
+                        .HasColumnType("uuid");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("numeric");
+
+                    b.Property<Guid>("ServiceIdentifier")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("ServiceType")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BillingId");
+
+                    b.ToTable("BillingService");
                 });
 
             modelBuilder.Entity("BarberBilling.Domain.Entities.Login.RefreshToken", b =>
@@ -88,6 +171,38 @@ namespace BarberBilling.Infrastructure.Migrations
                     b.ToTable("RefreshTokens");
                 });
 
+            modelBuilder.Entity("BarberBilling.Domain.Entities.Service", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Category")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("DeletedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("numeric");
+
+                    b.Property<int>("Services")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Services");
+                });
+
             modelBuilder.Entity("BarberBilling.Domain.Entities.User", b =>
                 {
                     b.Property<long>("Id")
@@ -95,6 +210,9 @@ namespace BarberBilling.Infrastructure.Migrations
                         .HasColumnType("bigint");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -108,9 +226,8 @@ namespace BarberBilling.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<Guid>("RoleIdentifier")
+                        .HasColumnType("uuid");
 
                     b.Property<int>("TokenVersion")
                         .HasColumnType("integer");
@@ -120,7 +237,66 @@ namespace BarberBilling.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("RoleIdentifier");
+
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("BarberBilling.Domain.Entities.Authorization.RolePermissions", b =>
+                {
+                    b.HasOne("BarberBilling.Domain.Entities.Authorization.Permission", "Permission")
+                        .WithMany("RolePermissions")
+                        .HasForeignKey("PermissionIdentifier")
+                        .HasPrincipalKey("PermissionIdentifier")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BarberBilling.Domain.Entities.Authorization.Role", "Role")
+                        .WithMany("RolePermissions")
+                        .HasForeignKey("RoleIdentifier")
+                        .HasPrincipalKey("RoleIdentifier")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Permission");
+
+                    b.Navigation("Role");
+                });
+
+            modelBuilder.Entity("BarberBilling.Domain.Entities.Billings.BillingService", b =>
+                {
+                    b.HasOne("BarberBilling.Domain.Entities.Billings.Billing", null)
+                        .WithMany("Services")
+                        .HasForeignKey("BillingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("BarberBilling.Domain.Entities.User", b =>
+                {
+                    b.HasOne("BarberBilling.Domain.Entities.Authorization.Role", "Role")
+                        .WithMany()
+                        .HasForeignKey("RoleIdentifier")
+                        .HasPrincipalKey("RoleIdentifier")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Role");
+                });
+
+            modelBuilder.Entity("BarberBilling.Domain.Entities.Authorization.Permission", b =>
+                {
+                    b.Navigation("RolePermissions");
+                });
+
+            modelBuilder.Entity("BarberBilling.Domain.Entities.Authorization.Role", b =>
+                {
+                    b.Navigation("RolePermissions");
+                });
+
+            modelBuilder.Entity("BarberBilling.Domain.Entities.Billings.Billing", b =>
+                {
+                    b.Navigation("Services");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,6 +1,3 @@
-
-
-using BarberBilling.Communication.Enums;
 using BarberBilling.Communication.Responses.Shared;
 
 namespace BarberBilling.Communication.Responses.Billings.GetAll;
@@ -8,9 +5,8 @@ namespace BarberBilling.Communication.Responses.Billings.GetAll;
 public record ResponseBillingListJson
 (
     Guid Id,
-    string ClientName,
-    string ServiceName,
-    decimal Amount,
+    Guid ClientIdentifier,       
+    decimal TotalAmount,          
     DateTimeOffset Date,
     EnumResponse Status
 );

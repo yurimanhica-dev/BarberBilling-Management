@@ -2,12 +2,10 @@ using BarberBilling.Communication.Enums;
 
 namespace BarberBilling.Communication.Requests.Billings;
 
-public record BillingRequestJson
-(
+public record BillingRequestJson(
     DateTime Date,
-    string ClientName,
-    string ServiceName,
-    decimal Amount,
+    Guid ClientIdentifier,
+    List<Guid> ServiceIds,
     PaymentMethod PaymentMethod,
     Status Status,
     string? Notes

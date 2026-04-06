@@ -1,14 +1,25 @@
 using BarberBilling.Application.Resources;
+using BarberBilling.Application.UseCases.Authentication.Login;
+using BarberBilling.Application.UseCases.Authentication.Refresh;
+using BarberBilling.Application.UseCases.Authentication.Revoke;
+using BarberBilling.Application.UseCases.Authorization.AssignPermission;
+using BarberBilling.Application.UseCases.Authorization.GetAllPermissions;
+using BarberBilling.Application.UseCases.Authorization.GetAllRoles;
+using BarberBilling.Application.UseCases.Authorization.RegisterPermission;
+using BarberBilling.Application.UseCases.Authorization.RegisterRole;
+using BarberBilling.Application.UseCases.Authorization.RevokePermission;
 using BarberBilling.Application.UseCases.Billings.Delete;
 using BarberBilling.Application.UseCases.Billings.GetAll;
 using BarberBilling.Application.UseCases.Billings.GetById;
 using BarberBilling.Application.UseCases.Billings.Register;
 using BarberBilling.Application.UseCases.Billings.Reports.Pdf;
 using BarberBilling.Application.UseCases.Billings.Update;
-using BarberBilling.Application.UseCases.User.Login;
-using BarberBilling.Application.UseCases.User.Refresh;
+using BarberBilling.Application.UseCases.Categories.GetAll;
+using BarberBilling.Application.UseCases.Services.Delete;
+using BarberBilling.Application.UseCases.Services.GetAll;
+using BarberBilling.Application.UseCases.Services.Register;
+using BarberBilling.Application.UseCases.User;
 using BarberBilling.Application.UseCases.User.Register;
-using BarberBilling.Application.UseCases.User.Revoke;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
 
@@ -34,6 +45,9 @@ public static class DependencyInjectionExtension
         // User
         services.AddScoped<IRegisterUserUseCase, RegisterUserUseCase>();
         
+        //Client
+        services.AddScoped<IRegisterClientUseCase, RegisterClientUseCase>();
+
         // Login
         services.AddScoped<ILoginUserUseCase, LoginUserUseCase>();
 
@@ -42,5 +56,21 @@ public static class DependencyInjectionExtension
 
         // Logout
         services.AddScoped<IRevokeTokenUseCase, RevokeTokenUseCase>();
+
+        //Authorization
+        services.AddScoped<IRegisterPermissionUseCase, RegisterPermissionUseCase>();
+        services.AddScoped<IGetAllPermissionsUseCase, GetAllPermissionsUseCase>();
+        services.AddScoped<IRegisterRoleUseCase, RegisterRoleUseCase>();
+        services.AddScoped<IGetAllRolesUseCase, GetAllRolesUseCase>();
+        services.AddScoped<IRevokePermissionUseCase, RevokePermissionUseCase>();
+        services.AddScoped<IAssignPermissionUseCase, AssignPermissionUseCase>();
+        
+        //Services
+        services.AddScoped<IRegisterServiceUseCase, RegisterServiceUseCase>();
+        services.AddScoped<IGetAllServicesUseCase, GetAllServicesUseCase>();
+        services.AddScoped<IDeleteServiceUseCase, DeleteServiceUseCase>();
+
+        // Categories
+        services.AddScoped<IGetAllCategoriesUseCase, GetAllCategoriesUseCase>();
     }
 }
