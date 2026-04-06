@@ -18,21 +18,6 @@ builder.Services.AddLocalization();
 builder.Services.AddJwtAuthentication(builder.Configuration);
 builder.Services.AddPermissionAuthorization();
 
-// Configure CORS
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowDevelopment", policy =>
-    {
-        var allowedOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>()
-            ?? new[] { "http://localhost:3000", "http://localhost:5173" };
-
-        policy.WithOrigins(allowedOrigins)
-              .AllowAnyMethod()
-              .AllowAnyHeader()
-              .AllowCredentials();
-    });
-});
-
 builder.Services.Configure<CompanySettings>(
 builder.Configuration.GetSection("CompanySettings"));
 
