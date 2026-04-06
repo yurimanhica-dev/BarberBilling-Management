@@ -1,7 +1,7 @@
 using BarberBilling.Application.Mappings;
 using BarberBilling.Application.Resources;
 using BarberBilling.Communication.Responses.Billings.GetAll;
-using BarberBilling.Domain.Entities.QueryParameters;
+using BarberBilling.Domain.Entities.Filters;
 using BarberBilling.Domain.Repositories.Billings;
 using Microsoft.Extensions.Localization;
 

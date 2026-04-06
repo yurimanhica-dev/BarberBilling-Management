@@ -1,4 +1,4 @@
-using BarberBilling.Domain.Entities;
+using BarberBilling.Domain.Entities.Billings;
 
 namespace BarberBilling.Domain.Repositories.Billings;
 

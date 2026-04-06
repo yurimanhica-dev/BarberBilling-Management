@@ -1,9 +1,8 @@
-using BarberBilling.Domain.Entities;
-using BarberBilling.Domain.Entities.QueryParameters;
+using BarberBilling.Domain.Entities.Billings;
+using BarberBilling.Domain.Entities.Filters;
 using BarberBilling.Domain.Enums;
 using BarberBilling.Domain.Repositories.Billings;
 using BarberBilling.Infrastructure.Context;
-using Humanizer;
 using Microsoft.EntityFrameworkCore;
 
 namespace BarberBilling.Infrastructure.Persistence.Repositories;
@@ -45,8 +44,8 @@ public class BillingRepository : IBillingWriteOnlyRepository, IBillingReadOnlyRe
         query = filter.SortBy switch
         {
             "amount" => filter.Order == "asc"
-                ? query.OrderBy(b => b.Amount)
-                : query.OrderByDescending(b => b.Amount),
+                ? query.OrderBy(b => b.TotalAmount)
+                : query.OrderByDescending(b => b.TotalAmount),
 
             _ => filter.Order == "asc"
                 ? query.OrderBy(b => b.CreatedAt)
@@ -65,7 +64,10 @@ public class BillingRepository : IBillingWriteOnlyRepository, IBillingReadOnlyRe
 
     async Task<Billing?> IBillingReadOnlyRepository.GetById(Guid id)
     {
-        return await _dbContext.Billings.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+        return await _dbContext.Billings
+            .AsNoTracking()
+            .Include(b => b.Services)
+            .FirstOrDefaultAsync(x => x.Id == id);
     }
     async Task<Billing?> IBillingUpdateOnlyRepository.GetById(Guid id)
     {
@@ -83,6 +85,7 @@ public class BillingRepository : IBillingWriteOnlyRepository, IBillingReadOnlyRe
 
         return _dbContext.Billings
             .AsNoTracking()
+            .Include(b => b.Services)
             .Where(x => x.Date >= from && x.Date < to)
             .Where(x => !status.HasValue || x.Status == status.Value)
             .OrderBy(x => x.Date)

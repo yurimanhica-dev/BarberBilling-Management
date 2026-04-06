@@ -5,4 +5,5 @@ public interface IUserReadOnlyRepository
     Task<bool> VerifyIfUserExist(string email);
     Task<Entities.User?> GetByEmail(string email);
     Task<Entities.User?> GetByIdentifier(Guid userIdentifier);
+    Task<Entities.User?> GetByIdentifierWithPermissions(Guid userIdentifier);
 }

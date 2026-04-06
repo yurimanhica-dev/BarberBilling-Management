@@ -28,4 +28,7 @@
   <data name="of" xml:space="preserve">
     <value>of</value>
   </data>
+  <data name="MultipleServices" xml:space="preserve">
+    <value>Multiple Services</value>
+  </data>
 </root>

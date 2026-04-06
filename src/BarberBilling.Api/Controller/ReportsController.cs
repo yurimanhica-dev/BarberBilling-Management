@@ -1,8 +1,9 @@
 using System.Net.Mime;
+using BarberBilling.Api.Security.Authorization;
 using BarberBilling.Application.Mappings;
 using BarberBilling.Application.UseCases.Billings.Reports.Pdf;
 using BarberBilling.Communication.Responses;
-using BarberBilling.Exceptions.ExceptionsBase;
+using BarberBilling.Exceptions.CustomExceptions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,7 +14,7 @@ namespace BarberBilling.Api.Controller;
 public class ReportsController : ControllerBase
 {
     [HttpGet("billings/weekly")]
-    [Authorize(Roles = "Manager")]
+    [Authorize(Policy = Permissions.Reports.ReadBillings)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
@@ -34,7 +35,7 @@ public class ReportsController : ControllerBase
     }
 
     [HttpGet("billings/monthly")]
-    [Authorize(Roles = "Manager")]
+    [Authorize(Policy = Permissions.Reports.ReadBillings)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]

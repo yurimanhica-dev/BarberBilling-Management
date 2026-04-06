@@ -29,6 +29,16 @@ internal class UserRepository : IUserReadOnlyRepository, IUserWriteOnlyRepositor
         return await _dbContext.Users.AsNoTracking().FirstOrDefaultAsync(user => user.UserIdentifier == userIdentifier);
     }
 
+    public async Task<User?> GetByIdentifierWithPermissions(Guid userIdentifier)
+    {
+        return await _dbContext.Users
+            .AsNoTracking()
+            .Include(u => u.Role)
+                .ThenInclude(r => r!.RolePermissions)
+                    .ThenInclude(rp => rp.Permission)
+            .FirstOrDefaultAsync(user => user.UserIdentifier == userIdentifier);
+    }
+
     public async Task Update(User user)
     {
         _dbContext.Users.Update(user);

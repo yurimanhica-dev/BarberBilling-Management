@@ -1,7 +1,10 @@
 using BarberBilling.Domain.Repositories;
 using BarberBilling.Domain.Repositories.Billings;
+using BarberBilling.Domain.Repositories.Categories;
+using BarberBilling.Domain.Repositories.Services;
 using BarberBilling.Domain.Repositories.Token;
 using BarberBilling.Domain.Repositories.User;
+using BarberBilling.Domain.Repositories.User.Authorization;
 using BarberBilling.Domain.Security.Cryptography;
 using BarberBilling.Domain.Security.Tokens;
 using BarberBilling.Infrastructure.Context;
@@ -44,11 +47,17 @@ public static class DependencyInjectionExtension
         services.AddScoped<IBillingReadOnlyRepository, BillingRepository>();
         services.AddScoped<IBillingUpdateOnlyRepository, BillingRepository>();
 
+        services.AddScoped<IServiceReadOnlyRepository, ServiceRepository>();
+        services.AddScoped<IServiceUpdateOnlyRepository, ServiceRepository>();
+        services.AddScoped<IServiceWriteOnlyRepository, ServiceRepository>();
+
+        services.AddScoped<ICategoryReadOnlyRepository, CategoryRepository>();
+
         services.AddScoped<IUserReadOnlyRepository, UserRepository>();
         services.AddScoped<IUserWriteOnlyRepository, UserRepository>();
 
-        // services.AddScoped<IAccessTokenGenerator, JwtTokenGenerator>();
-        // services.AddScoped<IRefreshTokenGenerator, JwtTokenGenerator>();
+        services.AddScoped<IAuthorizationReadOnlyRepository, AuthorizationRepository>();
+        services.AddScoped<IAuthorizationWriteOnlyRepository, AuthorizationRepository>();
 
         services.AddScoped<ITokenReadOnlyRepository, TokenRepository>();
         services.AddScoped<ITokenWriteOnlyRepository, TokenRepository>();

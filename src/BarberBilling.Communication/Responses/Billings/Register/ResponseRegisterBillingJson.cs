@@ -4,4 +4,3 @@ public record ResponseRegisterBillingJson
 (
     Guid Id 
 );
-    

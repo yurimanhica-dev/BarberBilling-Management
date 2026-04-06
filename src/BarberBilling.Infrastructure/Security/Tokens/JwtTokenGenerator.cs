@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using BarberBilling.Domain.Entities;
+using BarberBilling.Domain.Entities.Authorization;
 using BarberBilling.Domain.Entities.Login;
 using BarberBilling.Domain.Security.Tokens;
 using Microsoft.IdentityModel.Tokens;
@@ -21,15 +22,14 @@ public class JwtTokenGenerator : IAccessTokenGenerator, IRefreshTokenGenerator
         _secretKey = secretKey;
         _expirationInDays = expirationInDays;
     }
-    public string Generate(User user)
+    public string Generate(User user, Role role)
     {
         var claims = new List<Claim>()
         {
             new Claim(ClaimTypes.Name, user.Name),
             new Claim(ClaimTypes.Sid, user.UserIdentifier.ToString()),
-            new Claim(ClaimTypes.Role, user.Role),
+            new Claim(ClaimTypes.Role, role.Name),
             new Claim("token_version", user.TokenVersion.ToString()),
-
         };
 
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_secretKey));

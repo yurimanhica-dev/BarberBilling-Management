@@ -45,9 +45,26 @@
   <value>O estado não é válido.</value>
 </data>
 
-  <!-- Billing NotFoundException -->
+  <!-- NotFoundException -->
   <data name="BillingNotFound" xml:space="preserve">
     <value>Faturação Não Encontrada</value>
+  </data>
+  <data name="ServiceNotFound" xml:space="preserve">
+    <value>Serviço Não Encontrado</value>
+  </data>
+  <data name="RolePermissionNotFound" xml:space="preserve">
+    <value>Permissão não encontrada nesta role.</value>
+  </data>
+
+
+  <!-- Redundance Insert -->
+  <data name="ServiceStatusUnchanged" xml:space="preserve">
+    <value>Estado do serviço não alterado.</value>
+  </data>
+
+  <!-- Conflict GetAll -->
+  <data name="PermissionAlreadyExists" xml:space="preserve">
+    <value>Permissão já registrada.</value>
   </data>
 
   <!-- weekStart is not Monday -->
@@ -107,5 +124,21 @@
   <!-- Valida a existência do Token -->
   <data name="InvalidToken" xml:space="preserve">
     <value>Refresh Token inválido ou expirado.</value>
+  </data>
+
+  <data name="roleRequired" xml:space="preserve">
+    <value>A role é obrigatória.</value>
+  </data>
+
+  <data name="ServiceAlreadyExists" xml:space="preserve">
+    <value>Serviço já está registrado.</value>
+  </data>
+
+  <data name="UserNotFound" xml:space="preserve">
+    <value>Usuário não encontrado.</value>
+  </data>
+
+  <data name="ClientNotFound" xml:space="preserve">
+    <value>Cliente não encontrado.</value>
   </data>
 </root>

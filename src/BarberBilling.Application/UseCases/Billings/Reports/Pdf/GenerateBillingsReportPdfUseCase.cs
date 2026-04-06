@@ -1,11 +1,12 @@
 using System.Reflection;
 using BarberBilling.Application.Extensions;
 using BarberBilling.Application.Helper;
+using BarberBilling.Application.Mappings.Common;
 using BarberBilling.Application.Resources;
 using BarberBilling.Application.Settings;
 using BarberBilling.Application.UseCases.Billings.Reports.Pdf.colors;
 using BarberBilling.Application.UseCases.Billings.Reports.Pdf.fonts;
-using BarberBilling.Domain.Entities;
+using BarberBilling.Domain.Entities.Billings;
 using BarberBilling.Domain.Enums;
 using BarberBilling.Domain.Repositories.Billings;
 using BarberBilling.Domain.Resources;
@@ -59,7 +60,7 @@ public class GenerateBillingsReportPdfUseCase : IGenerateBillingsReportPdfUseCas
         var page = CreatePage(document);
         CreateHeaderWithImage(page);
 
-        CreateTotalBillingsSection(page, billings.Sum(b => b.Amount), title);
+        CreateTotalBillingsSection(page, billings.Sum(b => b.TotalAmount), title);
 
         foreach (var billing in billings)
             AddBillingTable(page, billing);
@@ -194,14 +195,18 @@ public class GenerateBillingsReportPdfUseCase : IGenerateBillingsReportPdfUseCas
             row.Height = Unit.FromCentimeter(0.5f);
             row.KeepWith = 2;
 
-            AddServiceNameTitle(row.Cells[0], billing.ServiceName);
+            var serviceNameTitle = billing.Services.Count == 1
+                ? billing.Services.First().ServiceType.ToEnumResponse(_enumLocalizer)!.Description
+                : _localizer["MultipleServices"].Value;
+
+            AddServiceNameTitle(row.Cells[0], serviceNameTitle);
             AddBillingAmountHeader(row.Cells[3]);
 
             row = table.AddRow();
             row.Height = Unit.FromCentimeter(0.5f);
             row.HeightRule = RowHeightRule.Exactly;
 
-            row.Cells[0].AddParagraph(billing.Date.ToString("D"));
+            row.Cells[0].AddParagraph(billing.Date.ToDate());
             SetStyleBaseForBillingInformation(row.Cells[0]);
 
             row.Cells[1].AddParagraph(billing.Date.ToString("t"));
@@ -209,18 +214,24 @@ public class GenerateBillingsReportPdfUseCase : IGenerateBillingsReportPdfUseCas
 
             row.Cells[2].AddParagraph(billing.PaymentMethod.GetDescription(_enumLocalizer));
             SetStyleBaseForBillingInformation(row.Cells[2]);
+            
+            if(billing.Services.Count > 1)
+                AddServicesList(table, billing);
 
-            AddBillingAmount(row.Cells[3], billing.Amount);
+            AddBillingAmount(row.Cells[3], billing.TotalAmount);
             
             if (!string.IsNullOrWhiteSpace(billing.Notes))
             {
+                
+                //com base no numero das linhas de servicos cria o merge para colocar o valor total
+                //row.Cells[3].MergeDown = billing.Services.Count();
                 var descriptionRow = table.AddRow();
                 descriptionRow.Height = Unit.FromCentimeter(0.5f);
                 descriptionRow.HeightRule = RowHeightRule.AtLeast;
 
                 var cell = descriptionRow.Cells[0];
                 cell.MergeRight = 2;
-                row.Cells[3].MergeDown = 1;
+                row.Cells[3].MergeDown = billing.Services.Count() + 1;
 
                 cell.Row!.TopPadding = Unit.FromCentimeter(0.2);
                 cell.Row!.BottomPadding = Unit.FromCentimeter(0.2);
@@ -233,7 +244,33 @@ public class GenerateBillingsReportPdfUseCase : IGenerateBillingsReportPdfUseCas
             }
 
             AddWhiteSpace(table);
-    }    
+    }
+
+    private void AddServicesList(Table table, Billing billing)
+    {
+        foreach (var service in billing.Services)
+        {
+            var row = table.AddRow();
+            row.Height = Unit.FromCentimeter(0.5f);
+            row.HeightRule = RowHeightRule.Exactly;
+
+            // 🔹 Nome do serviço
+            var serviceName = service.ServiceType
+                .ToEnumResponse(_enumLocalizer).Description;
+
+            var cell = row.Cells[0];
+            cell.MergeRight = 1; 
+            SetStyleBaseForBillingInformation(cell);
+
+            cell.AddParagraph(serviceName);
+
+            cell.VerticalAlignment = VerticalAlignment.Center;
+            AddBillingAmount(row.Cells[2], service.Price);
+
+            SetStyleBaseForBillingInformation(row.Cells[2]);
+        }
+    }   
+    
     private void CreateFooter(Section page)
     {
         // Cria um parágrafo no rodapé da seção
