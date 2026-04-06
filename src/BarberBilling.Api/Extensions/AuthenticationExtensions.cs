@@ -28,12 +28,17 @@ public static class AuthenticationExtensions
             Encoding.UTF8.GetBytes(configuration["Settings:Jwt:Key"]!)
         );
 
+        var validIssuer = configuration["Settings:Jwt:ValidIssuer"] ?? "BarberBilling";
+        var validAudience = configuration["Settings:Jwt:ValidAudience"] ?? "BarberBillingApp";
+
         return new TokenValidationParameters
         {
             IssuerSigningKey = key,
             ValidateIssuerSigningKey = true,
-            ValidateIssuer = false,
-            ValidateAudience = false,
+            ValidateIssuer = true,
+            ValidIssuer = validIssuer,
+            ValidateAudience = true,
+            ValidAudience = validAudience,
             ClockSkew = TimeSpan.Zero
         };
     }

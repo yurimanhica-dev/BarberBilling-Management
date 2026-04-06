@@ -32,12 +32,15 @@ if (app.Environment.IsDevelopment())
             o.WithTheme(ScalarTheme.BluePlanet);
             o.ForceDarkMode();
         });
+    app.UseDeveloperExceptionPage();
 }
 
 // var localizationOptions = LocalizationConfig.GetRequestLocalizationOptions();
 // app.UseRequestLocalization(localizationOptions);
 
 app.UseMiddleware<CultureMiddleware>();
+
+app.UseCors("AllowDevelopment");
 
 app.UseHttpsRedirection();
 
@@ -47,7 +50,7 @@ app.UseAuthorization();
 app.MapControllers();
 
 await MigrateDatabase();
-app.UseDeveloperExceptionPage();
+
 app.Run();
 
 async Task MigrateDatabase()
