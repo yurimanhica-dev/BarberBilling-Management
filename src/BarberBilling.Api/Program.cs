@@ -17,6 +17,7 @@ builder.Services.AddMvc(options => { options.Filters.Add<ExceptionFilter>(); });
 builder.Services.AddLocalization();
 builder.Services.AddJwtAuthentication(builder.Configuration);
 builder.Services.AddPermissionAuthorization();
+<<<<<<< HEAD
 
 // Configure CORS
 builder.Services.AddCors(options =>
@@ -32,6 +33,8 @@ builder.Services.AddCors(options =>
               .AllowCredentials();
     });
 });
+=======
+>>>>>>> d612663f21369da02436be1904c8cec87da948bf
 
 builder.Services.Configure<CompanySettings>(
 builder.Configuration.GetSection("CompanySettings"));
