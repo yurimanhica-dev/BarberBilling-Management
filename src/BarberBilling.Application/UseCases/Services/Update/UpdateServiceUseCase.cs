@@ -1,5 +1,6 @@
 using BarberBilling.Application.Mappings;
 using BarberBilling.Application.Resources;
+using BarberBilling.Application.Validators;
 using BarberBilling.Communication.Requests.Services;
 using BarberBilling.Communication.Responses.Services;
 using BarberBilling.Domain.Repositories;
@@ -27,6 +28,8 @@ public class UpdateServiceUseCase : IUpdateServiceUseCase
 
     public async Task<ResponseServiceJson> Execute(Guid serviceIdentifier, RequestServiceJson request)
     {
+        new ServiceValidator().ValidateInput(request);
+
         var service = await _updateRepository.GetByIdentifier(serviceIdentifier)
             ?? throw new NotFoundException("ServiceNotFound");
 

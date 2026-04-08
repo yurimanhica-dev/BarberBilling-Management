@@ -1,156 +1,112 @@
+using BarberBilling.Tests.CommonTestUtilities.helpers;
+using BarberBilling.Tests.CommonTestUtilities.Requests;
+using Shouldly;
 
 namespace Validators.Tests.Users.Register;
 
 public class RegisterUserValidatorTests
 {
-    // [Fact]
-    // public void Success()
-    // {
-    //     // Arrange
-    //     var validator = new UserValidator();
-    //     var request = RequestRegisterUserJsonBuilder.Build();
-
-    //     // Act
-    //     var result = validator.Validate(request);
-
-    //     // Assert
-    //     result.IsValid.ShouldBeTrue();
-    // }
-
-    // [Theory]
-    // [InlineData("")]
-    // [InlineData(" ")]
-    // public void Failure_When_Name_Is_Null_Or_Empty(string name)
-    // {
-    //     // Arrange
-    //     var validator = new UserValidator();
-    //     var request = RequestRegisterUserJsonBuilder.Build();
-    //     request.Name = name;
-
-    //     // Act
-    //     var result = validator.Validate(request);
-
-    //     // Assert
-    //     result.IsValid.ShouldBeFalse();
-    //     result.Errors.ShouldSatisfyAllConditions(
-    //         errors => errors.ShouldContain(e => e.ErrorMessage == "nameRequired"),
-    //         errors => errors.Count.ShouldBe(1)
-    //     );
-    // }
-
-    // [Fact]
-    // public void Failure_When_Name_Is_Too_Short()
-    // {
-    //     // Arrange
-    //     var validator = new UserValidator();
-    //     var request = RequestRegisterUserJsonBuilder.Build();
-    //     request.Name = "Yo";
-
-    //     // Act
-    //     var result = validator.Validate(request);
-
-    //     // Assert
-    //     result.IsValid.ShouldBeFalse();
-    //     result.Errors.ShouldContain(e => e.ErrorMessage == "nameTooShort");
-    // }
-
-    // [Fact]
-    // public void Failure_When_Email_Is_Invalid()
-    // {
-    //     // Arrange
-    //     var validator = new UserValidator();
-    //     var request = RequestRegisterUserJsonBuilder.Build();
-    //     request.Email = "invalid-email";
-
-    //     // Act
-    //     var result = validator.Validate(request);
-
-    //     // Assert
-    //     result.IsValid.ShouldBeFalse();
-    //     result.Errors.ShouldContain(e => e.ErrorMessage == "emailInvalid");
-    // }
-
+    [Fact]
+    public void Success()
+    {
+        var validator = new UserValidator();
+        var request = RequestRegisterUserJsonBuilder.Build();
+        var result = validator.Validate(request);
+        result.IsValid.ShouldBeTrue();
+    }
     
-    // [Theory]
-    // [InlineData("")]
-    // [InlineData("emailmuitorandomicoquepassaolimitemaximode150caractereseeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee@test.com")]
-    // [InlineData("emailinvalido")]
-    // public void Failure_When_Email_Is_Empty(string email)
-    // {
-    //     // Arrange
-    //     var validator = new UserValidator();
-    //     var request = RequestRegisterUserJsonBuilder.Build();
-    //     request.Email = email;
+    [Theory]
+    [MemberData(nameof(RequestIsNullOrWhiteSpace.InvalidValues), MemberType = typeof(RequestIsNullOrWhiteSpace))]
+    public void Error_Name_IsEmpty(string? name)
+    {
+        var validator = new UserValidator();
+        var request = RequestRegisterUserJsonBuilder.Build();
+        request.Name = name!;
 
-    //     // Act
-    //     var result = validator.Validate(request);
+        var result = validator.Validate(request);
 
-    //     // Assert
-    //     result.IsValid.ShouldBeFalse();
-    //     result.Errors.ShouldContain(e => e.ErrorMessage == "emailRequired");
-    // }
+        result.IsValid.ShouldBeFalse();
+        result.Errors.ShouldContain(e => e.ErrorMessage.Equals("nameRequired"));
+    }
 
-    // [Fact]
-    // public void Failure_When_Password_Is_Too_Short()
-    // {
-    //     // Arrange
-    //     var validator = new UserValidator();
-    //     var request = RequestRegisterUserJsonBuilder.Build();
-    //     request.Password = "Ab1";
+    [Theory]
+    [MemberData(nameof(RequestLongAndShortName.ShortNames), MemberType = typeof(RequestLongAndShortName))]
+    public void Error_Name_TooShort(string name)
+    {
+        var validator = new UserValidator();
+        var request = RequestRegisterUserJsonBuilder.Build();
+        request.Name = name;
 
-    //     // Act
-    //     var result = validator.Validate(request);
+        var result = validator.Validate(request);
 
-    //     // Assert
-    //     result.IsValid.ShouldBeFalse();
-    //     result.Errors.ShouldContain(e => e.ErrorMessage == "passwordTooShort");
-    // }
+        result.IsValid.ShouldBeFalse();
+        result.Errors.ShouldContain(e => e.ErrorMessage.Equals("nameTooShort"));
+    }
 
-    // [Fact]
-    // public void Failure_When_Password_Has_No_Uppercase()
-    // {
-    //     // Arrange
-    //     var validator = new UserValidator();
-    //     var request = RequestRegisterUserJsonBuilder.Build();
-    //     request.Password = "password1";
+    [Theory]
+    [MemberData(nameof(RequestLongAndShortName.LongNames), MemberType = typeof(RequestLongAndShortName))]
+    public void Error_Name_TooLong(string name)
+    {
+        var validator = new UserValidator();
+        var request = RequestRegisterUserJsonBuilder.Build();
+        request.Name = name;
 
-    //     // Act
-    //     var result = validator.Validate(request);
+        var result = validator.Validate(request);
+        result.IsValid.ShouldBeFalse();
+        result.Errors.ShouldContain(e => e.ErrorMessage.Equals("nameTooLong"));
+    }
 
-    //     // Assert
-    //     result.IsValid.ShouldBeFalse();
-    //     result.Errors.ShouldContain(e => e.ErrorMessage == "passwordMustContainUppercase");
-    // }
+    [Theory]
+    [MemberData(nameof(RequestIsNullOrWhiteSpace.InvalidValues), MemberType = typeof(RequestIsNullOrWhiteSpace))]
+    public void Error_Email_IsEmpty(string? email)
+    {
+        var validator = new UserValidator();
+        var request = RequestRegisterUserJsonBuilder.Build();
+        request.Email = email!;
 
-    // [Fact]
-    // public void Failure_When_Password_Has_No_Lowercase()
-    // {
-    //     // Arrange
-    //     var validator = new UserValidator();
-    //     var request = RequestRegisterUserJsonBuilder.Build();
-    //     request.Password = "PASSWORD1";
+        var result = validator.Validate(request);
 
-    //     // Act
-    //     var result = validator.Validate(request);
+        result.IsValid.ShouldBeFalse();
+        result.Errors.ShouldContain(e => e.ErrorMessage.Equals("emailRequired"));
+    }
 
-    //     // Assert
-    //     result.IsValid.ShouldBeFalse();
-    //     result.Errors.ShouldContain(e => e.ErrorMessage == "passwordMustContainLowercase");
-    // }
+    [Theory]
+    [MemberData(nameof(RequestInvalidEmail.InvalidEmails), MemberType = typeof(RequestInvalidEmail))]
+    public void Error_Email_Invalid(string email)
+    {
+        var validator = new UserValidator();
+        var request = RequestRegisterUserJsonBuilder.Build();
+        request.Email = email;
 
-    // [Fact]
-    // public void Failure_When_Password_Has_No_Number()
-    // {
-    //     // Arrange
-    //     var validator = new UserValidator();
-    //     var request = RequestRegisterUserJsonBuilder.Build();
-    //     request.Password = "Password";
+        var result = validator.Validate(request);
+        result.IsValid.ShouldBeFalse();
+        result.Errors.ShouldContain(e => e.ErrorMessage.Equals("emailInvalid"));
+    }
 
-    //     // Act
-    //     var result = validator.Validate(request);
+    [Theory]
+    [MemberData(nameof(RequestLongAndShortName.LongNames), MemberType = typeof(RequestLongAndShortName))]
+    public void Error_Email_TooLong(string email)
+    {
+        var validator = new UserValidator();
+        var request = RequestRegisterUserJsonBuilder.Build();
+        request.Email = email;
 
-    //     // Assert
-    //     result.IsValid.ShouldBeFalse();
-    //     result.Errors.ShouldContain(e => e.ErrorMessage == "passwordMustContainNumber");
-    // }
+        var result = validator.Validate(request);
+        result.IsValid.ShouldBeFalse();
+        result.Errors.ShouldContain(e => e.ErrorMessage.Equals("emailTooLong"));
+    }
+
+    [Theory]
+    [MemberData(nameof(RequestIsNullOrWhiteSpace.InvalidValues), MemberType = typeof(RequestIsNullOrWhiteSpace))]
+    public void Error_Password_IsEmpty(string? password)
+    {
+        var validator = new UserValidator();
+        var request = RequestRegisterUserJsonBuilder.Build();
+        request.Password = password!;
+
+        var result = validator.Validate(request);
+
+        result.IsValid.ShouldBeFalse();
+        result.Errors.ShouldContain(e => e.ErrorMessage.Equals("passwordIsEmpty"));
+    }
 }

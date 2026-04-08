@@ -662,7 +662,7 @@ Este projeto está licenciado sob a **Licença MIT** - veja o arquivo [LICENSE](
 
 Desenvolvido com ❤️ para a comunidade de desenvolvedores .NET
 
-![GitHub followers](https://img.shields.io/github/followers/seu-usuario?style=social)
-![GitHub stars](https://img.shields.io/github/stars/seu-usuario/BarberBilling?style=social)
+![GitHub followers](https://img.shields.io/github/followers/yurimanhica-dev?style=social)
+![GitHub stars](https://img.shields.io/github/stars/yurimanhica-dev/BarberBilling?style=social)
 
 </div>

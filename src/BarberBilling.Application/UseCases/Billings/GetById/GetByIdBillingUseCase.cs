@@ -1,4 +1,3 @@
-using BarberBilling.Application.Mappings;
 using BarberBilling.Application.Resources;
 using BarberBilling.Communication.Responses.Billings.GetById;
 using BarberBilling.Domain.Repositories.Billings;

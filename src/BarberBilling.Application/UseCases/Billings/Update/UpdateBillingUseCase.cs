@@ -1,4 +1,3 @@
-using BarberBilling.Application.Mappings;
 using BarberBilling.Application.Validators;
 using BarberBilling.Communication.Requests.Billings;
 using BarberBilling.Domain.Entities;
@@ -50,7 +49,7 @@ public class UpdateBillingUseCase : IUpdateBillingUseCase
             ?? throw new NotFoundException("ClientNotFound");
 
         request.UpdateEntity(billing);
-        billing.Services = services.Select(s => s.ToServiceEntity(billing.Id)).ToList();
+        billing.Services = services.Select(s => s.ToServiceBillingEntity(billing.Id)).ToList();
         billing.TotalAmount = billing.Services.Sum(s => s.Price);
 
         _billingRepository.Update(billing);

@@ -1,3 +1,4 @@
+using BarberBilling.Application.Validators;
 using BarberBilling.Communication.Requests.Authorization;
 using BarberBilling.Domain.Entities.Authorization;
 using BarberBilling.Domain.Repositories;
@@ -22,11 +23,13 @@ public class AssignPermissionUseCase : IAssignPermissionUseCase
         _unitOfWork = unitOfWork;
     }
 
-    public async Task Execute(Guid roleId, List<Guid> permissionIds)
+    public async Task Execute(Guid roleId, RequestPermissionsJson request)
     {
+        new PermissionsRequestValidator().ValidateInput(request);
+
         var removed = 0;
 
-        foreach (var permissionId in permissionIds)
+        foreach (var permissionId in request.PermissionIds)
         {
             // Evita duplicados
             var exists = await _readRepository.GetRolePermission(roleId, permissionId);
@@ -43,7 +46,7 @@ public class AssignPermissionUseCase : IAssignPermissionUseCase
         }
 
         if (removed == 0)
-            throw new NotFoundException("PermissionAlreadyExists");
+            throw new ConflictException("PermissionAlreadyExists");
 
         await _unitOfWork.Commit();
     }

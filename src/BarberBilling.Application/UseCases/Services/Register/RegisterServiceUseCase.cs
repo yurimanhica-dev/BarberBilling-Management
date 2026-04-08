@@ -1,4 +1,5 @@
 using BarberBilling.Application.Mappings;
+using BarberBilling.Application.Validators;
 using BarberBilling.Communication.Requests.Services;
 using BarberBilling.Communication.Responses.Services.Register;
 using BarberBilling.Domain.Repositories;
@@ -25,6 +26,8 @@ public class RegisterServiceUseCase : IRegisterServiceUseCase
 
     public async Task<ResponseRegisterServiceJson> Execute(RequestServiceJson request)
     {
+        new ServiceValidator().ValidateInput(request);
+
         var service = request.ToEntity();
 
         var exists = await _readRepository.GetByName(request.Services.ToString());

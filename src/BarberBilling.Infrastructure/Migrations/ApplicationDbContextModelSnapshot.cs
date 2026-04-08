@@ -148,6 +148,75 @@ namespace BarberBilling.Infrastructure.Migrations
                     b.ToTable("BillingService");
                 });
 
+            modelBuilder.Entity("BarberBilling.Domain.Entities.Bookings.Booking", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasDefaultValueSql("gen_random_uuid()");
+
+                    b.Property<Guid>("BarberIdentifier")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("ClientIdentifier")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("now()");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<DateTime>("ScheduledDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("Status")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(1);
+
+                    b.Property<decimal>("TotalAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("now()");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Bookings", (string)null);
+                });
+
+            modelBuilder.Entity("BarberBilling.Domain.Entities.Bookings.BookingService", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasDefaultValueSql("gen_random_uuid()");
+
+                    b.Property<Guid>("BookingId")
+                        .HasColumnType("uuid");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<Guid>("ServiceIdentifier")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("ServiceType")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BookingId");
+
+                    b.ToTable("BookingServices", (string)null);
+                });
+
             modelBuilder.Entity("BarberBilling.Domain.Entities.Login.RefreshToken", b =>
                 {
                     b.Property<long>("Id")
@@ -272,6 +341,15 @@ namespace BarberBilling.Infrastructure.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("BarberBilling.Domain.Entities.Bookings.BookingService", b =>
+                {
+                    b.HasOne("BarberBilling.Domain.Entities.Bookings.Booking", null)
+                        .WithMany("Services")
+                        .HasForeignKey("BookingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("BarberBilling.Domain.Entities.User", b =>
                 {
                     b.HasOne("BarberBilling.Domain.Entities.Authorization.Role", "Role")
@@ -295,6 +373,11 @@ namespace BarberBilling.Infrastructure.Migrations
                 });
 
             modelBuilder.Entity("BarberBilling.Domain.Entities.Billings.Billing", b =>
+                {
+                    b.Navigation("Services");
+                });
+
+            modelBuilder.Entity("BarberBilling.Domain.Entities.Bookings.Booking", b =>
                 {
                     b.Navigation("Services");
                 });

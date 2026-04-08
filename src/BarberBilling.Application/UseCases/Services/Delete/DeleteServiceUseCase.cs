@@ -1,10 +1,8 @@
 using BarberBilling.Application.Mappings;
-using BarberBilling.Application.Resources;
 using BarberBilling.Communication.Responses.Services.Delete;
 using BarberBilling.Domain.Repositories;
 using BarberBilling.Domain.Repositories.Services;
 using BarberBilling.Exceptions.CustomExceptions;
-using Microsoft.Extensions.Localization;
 
 namespace BarberBilling.Application.UseCases.Services.Delete;
 

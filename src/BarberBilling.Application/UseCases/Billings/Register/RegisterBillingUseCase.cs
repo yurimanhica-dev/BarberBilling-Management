@@ -30,13 +30,10 @@ public class RegisterBillingUseCase : IRegisterBillingUseCase
     {
         new BillingValidator().ValidateInput(request);
 
-        var user = await _userReadOnlyRepository.GetByIdentifier(userId);
-
         var client = await _userReadOnlyRepository.GetByIdentifier(request.ClientIdentifier)
             ?? throw new NotFoundException("UserNotFound");
 
-        var entity = request.ToEntity();
-        entity.BarberIdentifier = user!.UserIdentifier;
+        var entity = request.ToEntity(userId);
         entity.ClientIdentifier = client.UserIdentifier;
         entity.CreatedAt = DateTime.UtcNow;
 
@@ -46,7 +43,7 @@ public class RegisterBillingUseCase : IRegisterBillingUseCase
             var service = await _serviceReadOnlyRepository.GetByIdentifier(serviceId)
                 ?? throw new NotFoundException($"ServiceNotFound");
 
-            entity.Services.Add(service.ToServiceEntity(entity.Id));
+            entity.Services.Add(service.ToServiceBillingEntity(entity.Id));
         }
 
         // Calcula o total automaticamente

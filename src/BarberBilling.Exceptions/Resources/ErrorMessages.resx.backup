@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms</value>
+  </resheader>
+  
+  <!-- Translated messages -->
+  <data name="UnexpectedError" xml:space="preserve">
+    <value>An unexpected error occurred while processing the request.</value>
+  </data>
+
+  <!-- Request Billing Validator -->
+  <data name="barberNameRequired" xml:space="preserve">
+    <value>The Title is required.</value>
+  </data>
+  <data name="clientNameRequired" xml:space="preserve">
+    <value>The Title is required.</value>
+  </data>
+  <data name="serviceNameRequired" xml:space="preserve">
+    <value>The Title is required.</value>
+  </data>
+
+  <data name="AmountGreaterThanZero" xml:space="preserve">
+    <value>The Amount must be greater than zero.</value>
+  </data>
+
+  <data name="DateCannotBeFuture" xml:space="preserve">
+    <value>The Date cannot be in the future.</value>
+  </data>
+  <data name="DateCannotBeInPast" xml:space="preserve">
+    <value>The Date cannot be in the past.</value>
+  </data>
+
+  <data name="PaymentMethodInvalid" xml:space="preserve">
+    <value>The Payment Method is not valid.</value>
+  </data>
+  <data name="StatusInvalid" xml:space="preserve">
+    <value>The Status is not valid.</value>
+  </data>
+
+  <!-- NotFoundException -->
+  <data name="BillingNotFound" xml:space="preserve">
+    <value>Billing not Found.</value>
+  </data>
+  <data name="ServiceNotFound" xml:space="preserve">
+    <value>BiService not Found.</value>
+  </data>
+  <data name="RolePermissionNotFound" xml:space="preserve">
+    <value>Permission not found for this role.</value>
+  </data>
+
+  <!-- Redundance Insert -->
+  <data name="ServiceStatusUnchanged" xml:space="preserve">
+    <value>Service status unchanged.</value>
+  </data>
+
+  <!-- Conflict GetAll -->
+  <data name="PermissionAlreadyExists" xml:space="preserve">
+    <value>Permission already exists.</value>
+  </data>
+
+  <!-- weekStart is not Monday -->
+  <data name="WeekStartMustBeMonday" xml:space="preserve">
+    <value>The date must be a Monday.</value>
+  </data>
+
+  <!-- Inserted Month is Invalid -->
+  <data name="InvalidMonth" xml:space="preserve">
+    <value>The month provided is invalid. Please provide a value between 1 and 12.</value>
+  </data>
+
+  <!-- Name Validation -->
+  <data name="nameRequired" xml:space="preserve">
+    <value>Name is required.</value>
+  </data>
+  <data name="nameTooShort" xml:space="preserve">
+    <value>Name must be at least 3 characters long.</value>
+  </data>
+  <data name="nameTooLong" xml:space="preserve">
+    <value>Name must not exceed 100 characters.</value>
+  </data>
+
+  <!-- Email Validation -->
+  <data name="emailRequired" xml:space="preserve">
+    <value>Email is required.</value>
+  </data>
+  <data name="emailInvalid" xml:space="preserve">
+    <value>The provided email is not valid.</value>
+  </data>
+  <data name="emailTooLong" xml:space="preserve">
+    <value>Email must not exceed 150 characters.</value>
+  </data>
+
+  <!-- Password Validation -->
+  <data name="passwordNotStrongEnough" xml:space="preserve">
+    <value>The password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character.</value>
+  </data>
+  <data name="passwordIsEmpty" xml:space="preserve">
+    <value>Password is required.</value>
+  </data>
+  <data name="InvalidSpecialCharacter" xml:space="preserve">
+    <value>The password must contain at least one valid special character.</value>
+  </data>
+
+  <!-- Valida a existência do Email -->
+  <data name="EmailAlreadyExists" xml:space="preserve">
+    <value>Email already in use.</value>
+  </data>
+
+  <!-- Valida a existência do Usuário -->
+  <data name="EmailOrPasswordInvalid" xml:space="preserve">
+    <value>Invalid email or password.</value>
+  </data>
+
+  <!-- Valida a existência do Token -->
+  <data name="InvalidToken" xml:space="preserve">
+    <value>Invalid or expired refresh token.</value>
+  </data>
+
+  <data name="roleRequired" xml:space="preserve">
+    <value>Role is required.</value>
+  </data>
+
+  <data name="ServiceAlreadyExists" xml:space="preserve">
+    <value>Service already exists.</value>
+  </data>
+
+  <data name="UserNotFound" xml:space="preserve">
+    <value>User not found.</value>
+  </data>
+
+  <data name="ClientNotFound" xml:space="preserve">
+    <value>Client not found.</value>
+  </data>
+
+  <!-- Billing Validation -->
+  <data name="clientRequired" xml:space="preserve">
+    <value>Client is required.</value>
+  </data>
+  <data name="servicesRequired" xml:space="preserve">
+    <value>Services are required.</value>
+  </data>
+  <data name="atLeastOneServiceRequired" xml:space="preserve">
+    <value>At least one service is required.</value>
+  </data>
+
+  <!-- Booking Validation -->
+  <data name=\"ScheduledDateCannotBePast\" xml:space=\"preserve\">
+    <value>The scheduled date cannot be in the past.</value>
+  </data>
+  <data name=\"barberRequired\" xml:space=\"preserve\">
+    <value>Barber is required.</value>
+  </data>
+
+  <data name="BookingNotFound" xml:space="preserve">
+    <value>Booking not found.</value>
+  </data>
+  <data name="BookingCannotBeUpdated" xml:space="preserve">
+    <value>The booking cannot be updated.</value>
+  </data>
+  <data name="BookingCannotBeUpdated" xml:space="preserve">
+    <value>The booking cannot be updated.</value>
+  </data>
+</root>
+  

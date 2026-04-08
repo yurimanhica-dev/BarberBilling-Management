@@ -41,6 +41,15 @@ public static class Permissions
         public const string Delete = "billings:delete";
     }
 
+    public static class Bookings
+    {
+        public const string Create = "bookings:create";
+        public const string Read = "bookings:read";
+        public const string ReadById = "bookings:read-by-id";
+        public const string Update = "bookings:update";
+        public const string Delete = "bookings:delete";
+    }
+
     public static class Reports
     {
         public const string ReadBillings = "reports:billings-read";

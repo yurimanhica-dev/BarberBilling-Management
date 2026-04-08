@@ -1,6 +1,4 @@
-using BarberBilling.Application.Mappings.Common;
 using BarberBilling.Application.Resources;
-using BarberBilling.Application.UseCases.Categories.GetAll;
 using BarberBilling.Communication.Requests.Services;
 using BarberBilling.Communication.Requests.Services.GetAllFilter;
 using BarberBilling.Communication.Responses.Categories;
