@@ -1,3 +1,4 @@
+using BarberBilling.Application.Validators;
 using BarberBilling.Communication.Requests.Authentication.login;
 using BarberBilling.Communication.Responses.Authentication;
 using BarberBilling.Domain.Repositories;
@@ -33,6 +34,8 @@ public class LoginUserUseCase : ILoginUserUseCase
     }
     public async Task<ResponseTokensJson> Execute(RequestLoginJson request)
     {
+        new LoginValidator().ValidateInput(request);
+
         var email = request.Email.ToLower().Trim();
         
         var user = await _userReadOnlyRepository.GetByEmail(email) 

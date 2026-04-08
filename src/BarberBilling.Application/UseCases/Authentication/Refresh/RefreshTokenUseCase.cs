@@ -1,3 +1,5 @@
+using BarberBilling.Application.Validators;
+using BarberBilling.Communication.Requests.Authentication.RefreshToken;
 using BarberBilling.Communication.Responses.Authentication;
 using BarberBilling.Domain.Repositories;
 using BarberBilling.Domain.Repositories.Token;
@@ -37,9 +39,11 @@ public class RefreshTokenUseCase : IRefreshTokenUseCase
         _refreshTokenGenerator = refreshTokenGenerator;
         _unitOfWork = unitOfWork;
     }
-    public async Task<ResponseTokensJson> Execute(string refreshToken)
+    public async Task<ResponseTokensJson> Execute(RequestRefreshTokenJson request)
     {
-        var token = await _tokenReadOnlyRepository.GetByValue(refreshToken)
+        new RefreshTokenValidator().ValidateInput(request);
+
+        var token = await _tokenReadOnlyRepository.GetByValue(request.RefreshToken)
             ?? throw new InvalidLoginException("InvalidToken");
 
         if (token.ExpiresAt < DateTime.UtcNow)

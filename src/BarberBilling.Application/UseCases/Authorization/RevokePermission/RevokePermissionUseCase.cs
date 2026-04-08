@@ -1,3 +1,5 @@
+using BarberBilling.Application.Validators;
+using BarberBilling.Communication.Requests.Authorization;
 using BarberBilling.Domain.Repositories;
 using BarberBilling.Domain.Repositories.User.Authorization;
 using BarberBilling.Exceptions.CustomExceptions;
@@ -20,11 +22,13 @@ public class RevokePermissionUseCase : IRevokePermissionUseCase
         _unitOfWork = unitOfWork;
     }
 
-    public async Task Execute(Guid roleId, List<Guid> permissionIds)
+    public async Task Execute(Guid roleId, RequestPermissionsJson request)
     {
+        new PermissionsRequestValidator().ValidateInput(request);
+
         var removed = 0;
 
-        foreach (var permissionId in permissionIds)
+        foreach (var permissionId in request.PermissionIds)
         {
             var rolePermission = await _readRepository.GetRolePermission(roleId, permissionId);
 

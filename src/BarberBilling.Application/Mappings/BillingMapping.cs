@@ -18,21 +18,21 @@ public static class BillingMapping
     {
         return Enum.TryParse<Status>(status, out var s) ? s : null;
     }
-    public static Billing ToEntity(this BillingRequestJson request)
+    public static Billing ToEntity(this BillingRequestJson request, Guid userId)
     {
         return new Billing
         {
             Id = Guid.NewGuid(),
+            ClientIdentifier = request.ClientIdentifier,
+            BarberIdentifier = userId,
             Date = DateTime.SpecifyKind(request.Date, DateTimeKind.Utc),
             Status = (Status)request.Status,
             PaymentMethod = (PaymentMethod)request.PaymentMethod,
-            Notes = request.Notes,
-            CreatedAt = DateTime.UtcNow,
-            UpdatedAt = DateTime.UtcNow
+            Notes = request.Notes
         };
     }
 
-    public static BillingService ToServiceEntity(this Service service, Guid billingId)
+    public static BillingService ToServiceBillingEntity(this Service service, Guid billingId)
     {
         return new BillingService
         {

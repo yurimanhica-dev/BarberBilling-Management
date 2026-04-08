@@ -1,4 +1,5 @@
 using BarberBilling.Application.Mappings;
+using BarberBilling.Application.Validators;
 using BarberBilling.Communication.Requests.Authorization;
 using BarberBilling.Communication.Responses.Authorization;
 using BarberBilling.Domain.Entities.Authorization;
@@ -26,6 +27,8 @@ public class RegisterRoleUseCase : IRegisterRoleUseCase
 
     public async Task<ResponseRoleJson> Execute(RequestCreateRoleJson request)
     {
+        new RoleValidator().ValidateInput(request);
+
         // Evita roles duplicadas
         var exists = await _readRepository.GetRoleByName(request.Name);
 

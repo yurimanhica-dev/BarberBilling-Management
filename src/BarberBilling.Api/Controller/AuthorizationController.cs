@@ -65,7 +65,7 @@ public class AuthorizationController : ControllerBase
         [FromBody] RequestPermissionsJson request,
         [FromServices] IAssignPermissionUseCase useCase)
     {
-        await useCase.Execute(roleId, request.PermissionIds);
+        await useCase.Execute(roleId, request);
         return Ok("Permissions assigned successfully.");
     }
 
@@ -78,7 +78,7 @@ public class AuthorizationController : ControllerBase
         [FromBody] RequestPermissionsJson request,
         [FromServices] IRevokePermissionUseCase useCase)
     {
-        await useCase.Execute(roleId, request.PermissionIds);
+        await useCase.Execute(roleId, request);
         return Ok("Permissions revoked successfully.");
     }
 }

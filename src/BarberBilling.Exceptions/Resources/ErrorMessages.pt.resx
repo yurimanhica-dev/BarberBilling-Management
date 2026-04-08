@@ -18,32 +18,31 @@
     <value>Ocorreu um erro inesperado ao processar a requisição.</value>
   </data>
 
-  <!-- Request Expense Validator -->
-  <!-- Request Expense Validator -->
-<data name="barberNameRequired" xml:space="preserve">
-  <value>O nome do barbeiro é obrigatório.</value>
-</data>
-<data name="clientNameRequired" xml:space="preserve">
-  <value>O nome do cliente é obrigatório.</value>
-</data>
-<data name="serviceNameRequired" xml:space="preserve">
-  <value>O nome do serviço é obrigatório.</value>
-</data>
+  <!-- Request Billing Validator -->
+  <data name="barberNameRequired" xml:space="preserve">
+    <value>O nome do barbeiro é obrigatório.</value>
+  </data>
+  <data name="clientNameRequired" xml:space="preserve">
+    <value>O nome do cliente é obrigatório.</value>
+  </data>
+  <data name="serviceNameRequired" xml:space="preserve">
+    <value>O nome do serviço é obrigatório.</value>
+  </data>
 
-<data name="AmountGreaterThanZero" xml:space="preserve">
-  <value>O valor deve ser superior a zero.</value>
-</data>
+  <data name="AmountGreaterThanZero" xml:space="preserve">
+    <value>O valor deve ser superior a zero.</value>
+  </data>
 
-<data name="DateCannotBeFuture" xml:space="preserve">
-  <value>A data não pode estar no futuro.</value>
-</data>
+  <data name="DateCannotBeInPast" xml:space="preserve">
+    <value>A data não pode estar no passado.</value>
+  </data>
 
 <data name="PaymentMethodInvalid" xml:space="preserve">
   <value>O método de pagamento não é válido.</value>
 </data>
 <data name="StatusInvalid" xml:space="preserve">
   <value>O estado não é válido.</value>
-</data>
+</data> 
 
   <!-- NotFoundException -->
   <data name="BillingNotFound" xml:space="preserve">
@@ -104,6 +103,9 @@
     <value>A senha deve ter no mínimo 8 caracteres, contendo pelo menos uma letra maiúscula, minuscula,um número e um carácter especial
     </value>
   </data>
+  <data name="passwordIsEmpty" xml:space="preserve">
+    <value>A senha é obrigatória.</value>
+  </data>
   <data name="InvalidEspecialChapter" xml:space="preserve">
     <value>A senha deve ter no mínimo 8 caracteres, contendo pelo menos uma letra maiúscula, minuscula,um número e um carácter especial.</value>
   </data>
@@ -140,5 +142,24 @@
 
   <data name="ClientNotFound" xml:space="preserve">
     <value>Cliente não encontrado.</value>
+  </data>
+
+  <!-- Billing Validation -->
+  <data name="clientRequired" xml:space="preserve">
+    <value>O cliente é obrigatório.</value>
+  </data>
+  <data name="servicesRequired" xml:space="preserve">
+    <value>Os serviços são obrigatórios.</value>
+  </data>
+  <data name="atLeastOneServiceRequired" xml:space="preserve">
+    <value>Pelo menos um serviço é obrigatório.</value>
+  </data>
+  
+  <!-- Booking Validation -->
+  <data name="BookingNotFound" xml:space="preserve">
+    <value>Agendamento não encontrado.</value>
+  </data>
+  <data name="BookingCannotBeUpdated" xml:space="preserve">
+    <value>O agendamento não pode ser atualizado.</value>
   </data>
 </root>

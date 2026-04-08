@@ -12,8 +12,7 @@ public class BillingValidator : AbstractValidator<BillingRequestJson>
             .NotEmpty().WithMessage("clientRequired");
 
         RuleFor(b => b.ServiceIds)
-            .NotEmpty().WithMessage("servicesRequired")
-            .Must(s => s.Count > 0).WithMessage("atLeastOneServiceRequired");
+            .NotEmpty().WithMessage("servicesRequired");
 
         RuleFor(b => b.Date)
             .LessThanOrEqualTo(DateTime.UtcNow)

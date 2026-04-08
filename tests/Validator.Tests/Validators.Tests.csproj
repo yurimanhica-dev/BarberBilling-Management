@@ -22,7 +22,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\BarberBilling.Application\BarberBilling.Application.csproj" />
     <ProjectReference Include="..\..\src\BarberBilling.Communication\BarberBilling.Communication.csproj" />
-    <ProjectReference Include="..\BarberBilling.Tests\BarberBilling.Tests.csproj" />
+    <ProjectReference Include="..\CommonTestUtilities\CommonTestUtilities.csproj" />
   </ItemGroup>
 
 </Project>

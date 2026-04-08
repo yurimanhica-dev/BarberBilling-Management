@@ -1,20 +1,16 @@
 using System.Text.RegularExpressions;
-using ExpenseManagement.Exception;
 using FluentValidation;
 using FluentValidation.Validators;
-using Microsoft.Extensions.Localization;
 
 namespace BarberBilling.Application.UseCases.User;
 
 public partial class PasswordValidator<T> : PropertyValidator<T, string>
 {
     private const string ErrorMessageKey = "ErrorMessage";
-    private readonly IStringLocalizer<ErrorMessages> _localizer;
-
-    public PasswordValidator(IStringLocalizer<ErrorMessages> localizer)
+    public PasswordValidator()
     {
-        _localizer = localizer;
     }
+
     public override string Name => "PasswordValidator";
     protected override string GetDefaultMessageTemplate(string errorCode) => $"{{{ErrorMessageKey}}}";
 
@@ -22,7 +18,7 @@ public partial class PasswordValidator<T> : PropertyValidator<T, string>
     {
         if (string.IsNullOrWhiteSpace(password))
         {
-            var msg = _localizer["passwordNotStrongEnough"];
+            var msg = "passwordIsEmpty"; // _localizer["passwordIsEmpty"];
             context.MessageFormatter.AppendArgument(ErrorMessageKey, msg);
             return false;
         }
@@ -36,14 +32,14 @@ public partial class PasswordValidator<T> : PropertyValidator<T, string>
 
         if (!hasSpecialChar)
         {
-            var msg = _localizer["InvalidSpecialCharacter"];
+            var msg = "passwordNotStrongEnough"; // _localizer["InvalidSpecialCharacter"];
             context.MessageFormatter.AppendArgument(ErrorMessageKey, msg);
             return false;
         }
 
         if (!hasNumber || !hasUpperChar || !hasMiniMaxChars || !hasLowerChar || hasWhiteSpace)
         {
-            var msg = _localizer["passwordNotStrongEnough"];
+            var msg = "passwordNotStrongEnough"; // _localizer["passwordNotStrongEnough"];
             context.MessageFormatter.AppendArgument(ErrorMessageKey, msg);
             return false;
         }

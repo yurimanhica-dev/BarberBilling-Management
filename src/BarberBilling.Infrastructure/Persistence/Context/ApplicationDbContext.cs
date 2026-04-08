@@ -2,6 +2,7 @@
 using BarberBilling.Domain.Entities;
 using BarberBilling.Domain.Entities.Authorization;
 using BarberBilling.Domain.Entities.Billings;
+using BarberBilling.Domain.Entities.Bookings;
 using BarberBilling.Domain.Entities.Login;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,6 +20,7 @@ public class ApplicationDbContext : DbContext
     }
 
     public DbSet<Billing> Billings { get; set; }
+    public DbSet<Booking> Bookings { get; set; }
     public DbSet<User> Users { get; set; }
     public DbSet<RefreshToken> RefreshTokens { get; set; }
     public DbSet<Service> Services { get; set; }

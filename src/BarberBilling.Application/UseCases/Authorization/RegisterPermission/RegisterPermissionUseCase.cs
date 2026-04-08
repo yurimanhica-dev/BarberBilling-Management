@@ -1,4 +1,5 @@
 using BarberBilling.Application.Mappings;
+using BarberBilling.Application.Validators;
 using BarberBilling.Communication.Requests.Authorization;
 using BarberBilling.Communication.Responses.Authorization;
 using BarberBilling.Domain.Entities.Authorization;
@@ -26,6 +27,8 @@ public class RegisterPermissionUseCase : IRegisterPermissionUseCase
 
     public async Task<ResponsePermissionJson> Execute(RequestRegisterPermissionJson request)
     {
+        new PermissionValidator().ValidateInput(request);
+
         // Evita permissions duplicadas
         var exists = await _readRepository.GetPermissionByName(request.Name);
 

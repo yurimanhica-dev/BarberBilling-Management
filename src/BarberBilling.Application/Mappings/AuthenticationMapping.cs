@@ -1,4 +1,3 @@
-using BarberBilling.Communication.Requests.Authentication;
 using BarberBilling.Communication.Requests.Authentication.RegisterClient;
 using BarberBilling.Domain.Entities;
 

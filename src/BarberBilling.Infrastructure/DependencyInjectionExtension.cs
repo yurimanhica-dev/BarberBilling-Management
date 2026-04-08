@@ -1,5 +1,6 @@
 using BarberBilling.Domain.Repositories;
 using BarberBilling.Domain.Repositories.Billings;
+using BarberBilling.Domain.Repositories.Bookings;
 using BarberBilling.Domain.Repositories.Categories;
 using BarberBilling.Domain.Repositories.Services;
 using BarberBilling.Domain.Repositories.Token;
@@ -46,6 +47,10 @@ public static class DependencyInjectionExtension
         services.AddScoped<IBillingWriteOnlyRepository, BillingRepository>();
         services.AddScoped<IBillingReadOnlyRepository, BillingRepository>();
         services.AddScoped<IBillingUpdateOnlyRepository, BillingRepository>();
+
+        services.AddScoped<IBookingWriteOnlyRepository, BookingRepository>();
+        services.AddScoped<IBookingReadOnlyRepository, BookingRepository>();
+        services.AddScoped<IBookingUpdateOnlyRepository, BookingRepository>();
 
         services.AddScoped<IServiceReadOnlyRepository, ServiceRepository>();
         services.AddScoped<IServiceUpdateOnlyRepository, ServiceRepository>();

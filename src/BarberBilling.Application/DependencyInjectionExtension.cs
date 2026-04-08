@@ -14,6 +14,11 @@ using BarberBilling.Application.UseCases.Billings.GetById;
 using BarberBilling.Application.UseCases.Billings.Register;
 using BarberBilling.Application.UseCases.Billings.Reports.Pdf;
 using BarberBilling.Application.UseCases.Billings.Update;
+using BarberBilling.Application.UseCases.Bookings.Delete;
+using BarberBilling.Application.UseCases.Bookings.GetAll;
+using BarberBilling.Application.UseCases.Bookings.GetById;
+using BarberBilling.Application.UseCases.Bookings.Register;
+using BarberBilling.Application.UseCases.Bookings.Update;
 using BarberBilling.Application.UseCases.Categories.GetAll;
 using BarberBilling.Application.UseCases.Services.Delete;
 using BarberBilling.Application.UseCases.Services.GetAll;
@@ -41,6 +46,13 @@ public static class DependencyInjectionExtension
         services.AddScoped<IDeleteBillingUseCase, DeleteBillingUseCase>();
         services.AddScoped<IUpdateBillingUseCase, UpdateBillingUseCase>();
         services.AddScoped<IGenerateBillingsReportPdfUseCase, GenerateBillingsReportPdfUseCase>();
+
+        // Booking
+        services.AddScoped<IRegisterBookingUseCase, RegisterBookingUseCase>();
+        services.AddScoped<IGetAllBookingUseCase, GetAllBookingUseCase>();
+        services.AddScoped<IGetByIdBookingUseCase, GetByIdBookingUseCase>();
+        services.AddScoped<IUpdateBookingUseCase, UpdateBookingUseCase>();
+        services.AddScoped<IDeleteBookingUseCase, DeleteBookingUseCase>();
 
         // User
         services.AddScoped<IRegisterUserUseCase, RegisterUserUseCase>();

@@ -49,7 +49,7 @@ public class AuthenticationController : ControllerBase
         [FromBody] RequestRefreshTokenJson request,
         [FromServices] IRefreshTokenUseCase useCase)
     {
-        var response = await useCase.Execute(request.RefreshToken);
+        var response = await useCase.Execute(request);
         return Ok(response);
     }
 

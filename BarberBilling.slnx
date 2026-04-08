@@ -8,9 +8,7 @@
     <Project Path="src/BarberBilling.Infrastructure/BarberBilling.Infrastructure.csproj" />
   </Folder>
   <Folder Name="/tests/">
-    <Project Path="tests/BarberBilling.Tests/BarberBilling.Tests.csproj" />
-  </Folder>
-  <Folder Name="/tests/Validator.Tests/">
     <Project Path="tests/Validator.Tests/Validators.Tests.csproj" />
+    <Project Path="tests/CommonTestUtilities/CommonTestUtilities.csproj" />
   </Folder>
 </Solution>

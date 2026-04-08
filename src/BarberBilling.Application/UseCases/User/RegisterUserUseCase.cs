@@ -57,7 +57,7 @@ public class RegisterUserUseCase : IRegisterUserUseCase
 
     private async Task Validate(RequestRegisterUserJson request)
     {
-        var result = new UserValidator(_localizer).Validate(request);
+        var result = new UserValidator().Validate(request);
         
         var emailExists = await _readRepository.VerifyIfUserExist(request.Email);
         if (emailExists)

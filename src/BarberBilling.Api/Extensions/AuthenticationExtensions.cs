@@ -35,9 +35,9 @@ public static class AuthenticationExtensions
         {
             IssuerSigningKey = key,
             ValidateIssuerSigningKey = true,
-            ValidateIssuer = true,
+            ValidateIssuer = false,
             ValidIssuer = validIssuer,
-            ValidateAudience = true,
+            ValidateAudience = false,
             ValidAudience = validAudience,
             ClockSkew = TimeSpan.Zero
         };

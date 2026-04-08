@@ -1,6 +1,5 @@
 using BarberBilling.Application.Mappings;
 using BarberBilling.Application.Validators;
-using BarberBilling.Communication.Requests.Authentication;
 using BarberBilling.Communication.Requests.Authentication.RegisterClient;
 using BarberBilling.Communication.Responses.Authentication.RegisterClient;
 using BarberBilling.Domain.Repositories;
@@ -59,7 +58,7 @@ public class RegisterClientUseCase : IRegisterClientUseCase
 
     private async Task Validate(RequestRegisterClientJson request)
     {
-        var result = new ClientValidator(_localizer).Validate(request);
+        var result = new ClientValidator().Validate(request);
         
         var emailExists = await _userReadOnlyRepository.VerifyIfUserExist(request.Email);
         if (emailExists)
